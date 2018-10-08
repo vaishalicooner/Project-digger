@@ -1,0 +1,16 @@
+
+<!doctype html>
+<html>
+<head>
+  <title> Digger </title>
+</head>
+
+<body>
+    
+  {% for flash in get_flashed_messages() %}
+  {{ flash }}
+    {% endfor %}
+  {% block content %} put your content here {% endblock %}
+
+</body>
+</html>
