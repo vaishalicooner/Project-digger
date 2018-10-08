@@ -37,17 +37,29 @@ def sign_up():
 
     return render_template("sign_up.html")
 
-@app.route('/sign_up', methods = ["POST"])
-def signed_up():
 
-    # fname = request.form.get("fname")
-    # lname = request.form.get("lname")
-    # email = request.form.get("email")
-    # password = request.form.get("password")
-    # age = request.form.get("age")
+@app.route('/homepage')
+def home():
+    return render_template('/homepage.html')
+
+
+@app.route('/homepage', methods = ["POST"])
+def homepage():
+
     dogname = request.form.get("dogname")
-
     return render_template("homepage.html", dogname = dogname)
+
+# @app.route('/sign_up', methods = ["POST"])
+# def signed_up():
+
+#     # fname = request.form.get("fname")
+#     # lname = request.form.get("lname")
+#     # email = request.form.get("email")
+#     # password = request.form.get("password")
+#     # age = request.form.get("age")
+#     dogname = request.form.get("dogname")
+
+#     return render_template("homepage.html", dogname = dogname)
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the

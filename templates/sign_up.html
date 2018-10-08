@@ -2,12 +2,12 @@
 {% block content %}
 
 <form action="/homepage" method= "POST">
-    Owner First Name: <input type = "text" name = "fname"><br><br>
-    Owner Last Name: <input type = "text" name = "lname"><br><br>
+    Owner First Name: <input type = "text" name = "fname" required><br><br>
+    Owner Last Name: <input type = "text" name = "lname" required=""><br><br>
     Apartment Number :<input type = "number" name = "apt"><br><br>
-    Email: <input type= "email" name="email"><br><br>
-    Password: <input type= "password" name= "password"><br><br>
-    Dog Name: <input type = "text" name = "dogname"><br><br>
+    Email: <input type= "email" name="email" required=""><br><br>
+    Password: <input type= "password" name= "password" required=""><br><br>
+    Dog Name: <input type = "text" name = "dogname" required=""><br><br>
     Dog Age: <input type = "number" name = "age" min = "0"><br><br>
     Breed: <input type = "text" name = "breed"><br><br>
     Gender: <input type = "radio" name = "gender" value = "male"> Male
@@ -18,7 +18,7 @@
 
 
     <br>
-    <input type = "submit">
+    <input type = "submit" value = "Sign-Up!">
 </form>
 
 {% endblock %}
