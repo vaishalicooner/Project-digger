@@ -1,9 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>Dog Name:</th>
+            <th>Check-in Time:</th>
+            <th>Check-out Time:</th>
+        </tr>
+    </thead>
+    <tbody>
 
-<p> Dog Name: {{dogname}}</p>
-<P> Check-in Time {{check_in}}</P>
-<p> Check-out Time {{check_out}}</p>
+    {%for loop%}
 
+    <tr>
+        <td>{{ }}</td>
+        <td>{{ }}</td>
+        <td>{{ }}</td>
+    </tr>
+
+    {%endfor%}
+    </tbody>
+</table>
 
 {% endblock %}

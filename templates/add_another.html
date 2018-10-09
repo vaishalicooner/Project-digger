@@ -2,11 +2,6 @@
 {% block content %}
 
 <form action="/homepage" method= "POST">
-    Owner First Name: <input type = "text" name = "fname" required><br><br>
-    Owner Last Name: <input type = "text" name = "lname" required=""><br><br>
-    Apartment Number :<input type = "number" name = "apt"><br><br>
-    Email: <input type= "email" name="email" required=""><br><br>
-    Password: <input type= "password" name= "password" required=""><br><br>
     Dog Name: <input type = "text" name = "dogname" required=""><br><br>
     Dog Age: <input type = "number" name = "age" min = "0"><br><br>
     Breed: <input type = "text" name = "breed"><br><br>
@@ -15,13 +10,6 @@
     Size: <input type = "radio" name = "dogsize" value = "small">Small (upto 25 pounds)
           <input type = "radio" name = "dogsize" value = "medium">Medium (25 to 50 pounds)
           <input type = "radio" name = "dogsize" value = "large">Large (over 50 pounds)<br><br>
-    Add picture: <input type="file" name="pic" accept="image/*">
-    <br><br>
-    <input type = "submit" value = "Sign-Up!"><br><br>
+<input type = "submit" value = "Add">
 </form>
-<form>
-    <!-- <a href="/add_another">Add another</a> -->
-    <button><a href="/add_another">Add another</a></button>
-</form>
-
 {% endblock %}

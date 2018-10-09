@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<form action="/login_form" method= "POST">
-    Email: <input type= "text" name="email">
-    Password: <input type= "password" name= "password">
+<form action="/login" method= "POST">
+    Email: <input type= "text" name="email" required>
+    Password: <input type= "password" name= "password" required>
     <input type= "submit" value= "Login!">
-    <button type="button"> Sign-up!</button>
-
-</form>
+</form><br><br>
 <img src="http://3.bp.blogspot.com/_L4ckJQzJkOQ/Sqj9Lvhm_XI/AAAAAAAABQE/PEmIselLhig/s320/groupCatsDogs.gif" width="400" height="300">
 
+<form>
+    <!-- <a href="/sign_up">Sign-Up</a> -->
+     <button><a href="/sign_up">Sign-Up</a></button>
+</form>
 {% endblock %}

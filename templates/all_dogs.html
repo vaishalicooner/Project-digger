@@ -1,7 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
+<h1>All dogs </h1>
+<button><a href="/all_dogs">All Dogs</a></button>
+<button><a href="/homepage">Home</a></button>
+<button><a href="/activity_log">Activity Log</a></button>
+<button><a href="/profile">Profile</a></button>
+<button><a href="/logout">Logout</a></button>
+<table>
+    <thead>
+        <tr>
+            <th>Dog Name</th>
+            <th>Breed</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Size</th>
+            <th>Picture</th>
+        </tr>
+    </thead>
+    <tbody>
 
+<!--     {% for loop %}
 
+    <tr>
+        <td>{{ }}</td>
+        <td>{{ }}</td>
+        <td>{{ }}</td>
+        <td>{{ }}</td>
+        <td>{{ }}</td>
+        <td>{{ }}</td>
+
+    </tr>
+
+    {% endfor %} -->
+    </tbody>
+</table>
 
 
 {% endblock %}

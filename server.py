@@ -19,24 +19,31 @@ def logged_in():
     password = request.form.get("password")
 
 
-    user = User.query.filter_by(email = email).first()
+    # user = User.query.filter_by(email = email).first()
 
-    if not user:
-        flash("No such user")
-        return redirect("/login")
+    # if not user:
+    #     flash("No such user")
+    #     return redirect("/login")
 
-    if user.password == password:
-        session['user_id']= user.user_id
-        return redirect('/homepage')
-    else:
-        flash("Incorrect password")
-        return redirect("/login")
+    # if user.password == password:
+    #     session['user_id']= user.user_id
+    #     return redirect('/homepage')
+    # else:
+    #     flash("Incorrect password")
+    #     return redirect("/login")
+
+    return render_template('homepage.html')
 
 @app.route('/sign_up')
 def sign_up():
 
     return render_template("sign_up.html")
 
+
+@app.route('/add_another')
+def add_another():
+
+    return render_template("add_another.html")
 
 @app.route('/homepage')
 def home():
@@ -48,6 +55,12 @@ def homepage():
 
     dogname = request.form.get("dogname")
     return render_template("homepage.html", dogname = dogname)
+    
+
+@app.route('/all_dogs')
+def all_dogs():
+
+    return render_template('all_dogs.html')
 
 # @app.route('/sign_up', methods = ["POST"])
 # def signed_up():
