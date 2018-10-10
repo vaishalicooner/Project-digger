@@ -1,25 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
+
+<button><a href="/all_dogs">All Dogs</a></button>
+<button><a href="/homepage">Home</a></button>
+<button><a href="/activity_log">Activity Log</a></button>
+<button><a href="/profile">Profile</a></button>
+<button><a href="/logout">Logout</a></button><br><br>
+<h1>Dogs Activity Log</h1><br>
 <table>
     <thead>
         <tr>
-            <th>Dog Name:</th>
-            <th>Check-in Time:</th>
-            <th>Check-out Time:</th>
+            <th>--Check-in Time--  </th>
+            <th>--Check-out Time--  </th>
         </tr>
     </thead>
-    <tbody>
 
-    {%for loop%}
-
-    <tr>
-        <td>{{ }}</td>
-        <td>{{ }}</td>
-        <td>{{ }}</td>
+    {% for log in logs%}
+      <tr>
+        <td>{{log.checkin}}</td>
+        <td>{{log.checkout}}</td>
+       
     </tr>
-
     {%endfor%}
-    </tbody>
+
 </table>
 
 {% endblock %}

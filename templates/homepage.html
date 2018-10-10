@@ -9,17 +9,33 @@
 <button><a href="/activity_log">Activity Log</a></button>
 <button><a href="/profile">Profile</a></button>
 <button><a href="/logout">Logout</a></button>
-
+<br>
+<br>
 
 <p><img src = "https://lh3.googleusercontent.com/ECiRImhQuPDQj8yRj6TCo_7cxqueZlf5m0UeljycFqXyFsfSAIes3xeiJaNZA0SCgN0vdmpQJR-ltJOSvsIs2qwDeWLwUM0xmZbtAYTfc2c3hQn5GaoAfOIXa-WSz-nI_FEHHuLFMTtx6cESHZ9yFczR1gCB04tm4gd8E5PF1fpccXbFUIR8wubrC_BcuQXxb0QS00iXuDY9DHrZ5qLpruJC1rHXuQjoljLKwRbMAYV-WAZq6SM1RR0WA21rKa0avB4kFmFsGmrEXSka_WwS1igNH-_L6_wsEeoX8HsExan3uLwdsRydjby1FheUTVrdEK-XmHMiLkDkYNOEUdSiBL3AVb6M5Y0JUByRF38LQyuTpJek_PIadvFC6oA-Gn5sj-iUxc7M64n4x7DR2l-3IOKYw9rNIPDunpvYKZIOebqCeRiFYza1WF2KOMWeMwqEJvoar9JxCBXVqHkNM2rJEMqON45JgFnZ4bX_cAZNUQmjwP5Y76uNs0P6qQTxUZHWOmilHe5mxSMPep54n6Erf6dd0gV5ffq0Dfi3x69F9b0UOuENLMSo8ZC4BFUYR-6RphEBgX9WkcAVRMLWH7hFUPtBpfcVzZFcX7BmmqUZ569RXDP8-AH79o6viJPGaN_4_lCOf4pn4CGadpRaX7oLg634nDrU2_A4DLO2psSIu9EVDjxJL68hmBROhQ=w628-h837-no" width="200" height="200"></p>
-<!-- <form action = >
-    <input type = "submit" value = "check_in">
-    <input type = "submit" value = "check_out">
-</form> -->
+
+
+<!-- <button id = "checkin">Check-in</button> -->
 
 <form>
-    <button><a href="">Check-in</a></button>
-     <button><a href="">Check-out</a></button>
+    <input type="button" id="checkin" value="Check-in" onclick="window.location.href='/homepage'">
 </form>
+
+<script>
+  "use strict";
+  // code here for above-problem
+  let button = document.querySelector('#checkin');
+
+  function click() {
+    if (button.innerHTML === "Check-in") {
+      button.innerHTML = "Check-out";
+    }
+    else {
+      button.innerHTML = "Check-in";
+    }
+  }
+  button.addEventListener('click', click);
+ </script>
+
 
 {% endblock %}

@@ -1,6 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<button><a href="/all_dogs">All Dogs</a></button>
+<button><a href="/homepage">Home</a></button>
+<button><a href="/activity_log">Activity Log</a></button>
+<button><a href="/profile">Profile</a></button>
+<button><a href="/logout">Logout</a></button>
 
+<h1>Profile</h1>
+
+
+<p>First Name: {{profiles.fname}}</p>
+<p>Last Name: {{profiles.lname}}</p>
+<p>Email: {{profiles.email}}</p>
+<p>Password: {{profiles.password}}</p>
+
+<!-- jinja for loop for dog in profiles.dogs.... -->
+{% for dog in profiles.dogs %}
+<p>Dog Name: {{dog.dogname}}</p>
+<p>Age: {{dog.age}}</p>
+<p>Breed: {{dog.breed}}</p>
+<p>Gender: {{dog.gender}}</p>
+<p>Size: {{dog.size}}</p>
+{% endfor %}
 
 {% endblock %}

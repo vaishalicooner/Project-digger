@@ -1,38 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>All dogs </h1>
+
 <button><a href="/all_dogs">All Dogs</a></button>
 <button><a href="/homepage">Home</a></button>
 <button><a href="/activity_log">Activity Log</a></button>
 <button><a href="/profile">Profile</a></button>
 <button><a href="/logout">Logout</a></button>
+
+<h1>All dogs </h1>
 <table>
     <thead>
         <tr>
-            <th>Dog Name</th>
-            <th>Breed</th>
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Size</th>
-            <th>Picture</th>
+            <th>--Dog Name-- </th>
+            <th>--Age--  </th>
+            <th>--Breed-- </th>
+            <th>--Gender-- </th>
+            <th>--Size--</th>
+            
         </tr>
     </thead>
-    <tbody>
-
-<!--     {% for loop %}
-
-    <tr>
-        <td>{{ }}</td>
-        <td>{{ }}</td>
-        <td>{{ }}</td>
-        <td>{{ }}</td>
-        <td>{{ }}</td>
-        <td>{{ }}</td>
+    {% for dog in dogs%}
+      <tr>
+        <td>{{dog.dogname}}</td>
+        <td>{{dog.age}}</td>
+        <td>{{dog.breed}}</td>
+        <td>{{dog.gender}}</td>
+        <td>{{dog.size}}</td>
 
     </tr>
-
-    {% endfor %} -->
-    </tbody>
+    {%endfor%}
 </table>
 
 

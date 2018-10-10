@@ -18,13 +18,13 @@ class User(db.Model):
     lname = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(64), nullable=False)
-    apt_no = db.Column(db.Integer, nullable=True)
+    apt = db.Column(db.Integer, nullable=True)
 
 
     def __repr__(self):
-    """Provide helpful representation when printed."""
+        """Provide helpful representation when printed."""
 
-    return "<User {} {} Apt no.{}>".format(self.fname, self.lname, self.apt_no)
+        return "<User {} {} Apt no.{}>".format(self.fname, self.lname, self.apt_no)
 
 
 class Dog(db.Model):
@@ -39,15 +39,15 @@ class Dog(db.Model):
     gender = db.Column(db.String(7), nullable=True)
     size = db.Column(db.String(7), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    photo = db.Column(db.Image, nullable=False)
+    photo = db.Column(db.String(100), nullable=True)
 
 
     user = db.relationship('User', backref = 'dogs')
 
     def __repr__(self):
-    """Provide helpful representation when printed."""
+        """Provide helpful representation when printed."""
 
-    return "<Dog {} Age {} Breed {} Gender {} Size {}>".format(self.dogname
+        return "<Dog {} Age {} Breed {} Gender {} Size {}>".format(self.dogname
         , self.age, self.breed, self.gender, self.size)
 
 class Log(db.Model):
@@ -55,16 +55,17 @@ class Log(db.Model):
     __tablename__ = "logs"
 
     log_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    date = db.Column(db.DateTime, nullable=False)
+    # date = db.Column(db.DateTime, nullable=False)
     dog_id = db.Column(db.Integer, db.ForeignKey('dogs.dog_id'), nullable=False)
-    activity = 
+    checkin = db.Column(db.DateTime, nullable=False)
+    checkout = db.Column(db.DateTime, nullable=False)
 
     dog = db.relationship('Dog', backref = 'logs')
 
     def __repr__(self):
-    """Provide helpful representation when printed."""
+        """Provide helpful representation when printed."""
 
-    return "<Log: Date {} Check-in {} Check-out {}>".format(self.date
+        return "<Log: Date {} Check-in {} Check-out {}>".format(self.date
         , self.check_in, self.check_out)
 
 
@@ -73,7 +74,7 @@ def connect_to_db(app):
     """Connect the database to our Flask app."""
 
     # Configure to use our PstgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///digger'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
@@ -82,7 +83,6 @@ def connect_to_db(app):
 if __name__ == "__main__":
     # As a convenience, if we run this module interactively, it will leave
     # you in a state of being able to work with the database directly.
-
     from server import app
     connect_to_db(app)
     print("Connected to DB.")
