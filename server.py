@@ -25,19 +25,18 @@ def logged_in():
 
     email = request.form.get("email")
     password = request.form.get("password")
-    dogname = request.form.get("dogname")
 
-
+    # user_name = User.query.get(session['user_id'])
     user = User.query.filter_by(email = email).first()
     
     if not user:
-        # flash("No such user")
+        flash("No such user")
         return redirect("/")
 
     if user.password == password:
         session['user_id']= user.user_id
-        # return render_template('/homepage.html', dogname=dogname)
-        return redirect('/homepage')
+        return render_template('/homepage.html')
+        # return redirect('/homepage')
     else:
         flash("Incorrect password")
         return redirect("/")
@@ -114,19 +113,20 @@ def added_another():
     db.session.commit()
     return render_template("homepage.html" )
 
+
 @app.route('/homepage')
 def home():
 
-    # dogname = Dog.query.get()
-    return render_template('/homepage.html')
+    present_log = Log.query.options(db.joinedload('dog')).filter(Log.checkout.is_(None)).all()
+
+    return render_template('/homepage.html', logs=present_log)
 
 
 @app.route('/homepage', methods = ["POST"])
 def homepage():
 
-    dogname = request.form.get("dogname")
-    # present_dogs = 
-    return render_template("homepage.html", dogname=dogname)
+    present_dogs = Dog.query.all()
+    return render_template("homepage.html", dogs=present_dogs)
 
 
 @app.route('/all_dogs')

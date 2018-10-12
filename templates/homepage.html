@@ -1,32 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1> Digger </h1>
+<!-- <h1> Welcome to Digger. Your dogs playground! </h1> -->
 
-<p> Hello, {{dogname}}!</p>
-
+<p> Welcome to Digger. Your dogs playground! </p>
+ 
 <button><a href="/all_dogs">All Dogs</a></button>
 <button><a href="/homepage">Home</a></button>
 <button><a href="/activity_log">Activity Log</a></button>
 <button><a href="/profile">Profile</a></button>
 <button><a href="/logout">Logout</a></button><br><br>
 <form>
-    <!-- <a href="/add_another">Add another</a> -->
     <button><a href="/add_another">Add another dog</a></button>
 </form>
 <br>
 <br>
 
+<table align="right">
+    <thead>
+            <th> List of dogs at present!</th>    
+    </thead>
+    {% for log in logs%}
+      <tr>
+        <td>{{log.dog.dogname}}</td>
+    </tr>
+    {%endfor%}
+</table>
+
 <p><img src = "https://lh3.googleusercontent.com/ECiRImhQuPDQj8yRj6TCo_7cxqueZlf5m0UeljycFqXyFsfSAIes3xeiJaNZA0SCgN0vdmpQJR-ltJOSvsIs2qwDeWLwUM0xmZbtAYTfc2c3hQn5GaoAfOIXa-WSz-nI_FEHHuLFMTtx6cESHZ9yFczR1gCB04tm4gd8E5PF1fpccXbFUIR8wubrC_BcuQXxb0QS00iXuDY9DHrZ5qLpruJC1rHXuQjoljLKwRbMAYV-WAZq6SM1RR0WA21rKa0avB4kFmFsGmrEXSka_WwS1igNH-_L6_wsEeoX8HsExan3uLwdsRydjby1FheUTVrdEK-XmHMiLkDkYNOEUdSiBL3AVb6M5Y0JUByRF38LQyuTpJek_PIadvFC6oA-Gn5sj-iUxc7M64n4x7DR2l-3IOKYw9rNIPDunpvYKZIOebqCeRiFYza1WF2KOMWeMwqEJvoar9JxCBXVqHkNM2rJEMqON45JgFnZ4bX_cAZNUQmjwP5Y76uNs0P6qQTxUZHWOmilHe5mxSMPep54n6Erf6dd0gV5ffq0Dfi3x69F9b0UOuENLMSo8ZC4BFUYR-6RphEBgX9WkcAVRMLWH7hFUPtBpfcVzZFcX7BmmqUZ569RXDP8-AH79o6viJPGaN_4_lCOf4pn4CGadpRaX7oLg634nDrU2_A4DLO2psSIu9EVDjxJL68hmBROhQ=w628-h837-no" width="200" height="200"></p>
-
-<!-- <button id = "checkin">Check-in</button> -->
-
+<form>
+{% for dog in my_dogs %}
+<input type="checkbox" name="dog" value="dog">{{dog.dogname}}
+{% endfor %}
+</form>
+<br><br>
 <button id = "checkin" value = "Check-in">Check-in</button>
-
 <script>
   "use strict";
-  // code here for above-problem
+  
   let button = $('#checkin');
-
 
 function checkin_click(evt) {
     evt.preventDefault();
@@ -46,14 +57,9 @@ function checkin_click(evt) {
         })
         button.html("Check-in");
     }
-    
-      
   }
 button.on('click', checkin_click)
 
-
-
  </script>  
-
 
 {% endblock %}

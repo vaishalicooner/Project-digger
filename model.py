@@ -65,8 +65,7 @@ class Log(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Log: Date {} Check-in {} Check-out {}>".format(self.date
-        , self.check_in, self.check_out)
+        return "<Log: Check-in {} Check-out {}>".format(self.checkin, self.checkout)
 
 
 
