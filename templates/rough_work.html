@@ -1,61 +1,26 @@
 
-Javascript for button click:
-
-$('button').on('click', function () {
-  $.alert('Message here', {
-    // Options
-});
-});
-
-
-Jquery for alert message on button click:
-<fieldset>
-  <form action="some-script" id="prevent-form-submission-form">
-    Favorite color: <input type="text" name="favorite-color" id="favorite-color-field">
-    <input type="submit" id="prevent-form-submission-button" value="Just an Alert, Please!">
-  </form>
-</fieldset>
-
 <script>
-  "use strict";
-  // code here for above problem
-  let colorForm = document.querySelector('#prevent-form-submission-form');
-  function alertClick(event) {
-    alert("Hello!");
-    event.preventDefault();
-  }
-  colorForm.addEventListener('submit', alertClick);
+
+  function checkin_click(evt) {
+    evt.preventDefault();
+    if (button.html() === "Check-in") 
+    {
+        $.get('/checkin', function(data) 
+        {
+            console.log(data)
+    })
+      button.html("Check-out");
+    }
+    if (button.html() === "Check-out")
+    {
+        $.get('/checkout', function(result)
+        {
+            console.log(result)
+        }
+    }
+    else {
+      button.html("Check-in");
+    }
+  
+button.on('click', checkin_click)
 </script>
-
-
-
-<table>
-    <thead>
-        <tr>
-            <th>--First Name-- </th><br>
-            <th>--Last Name--  </th><br>
-            <th>--Email--</th>
-            <th>--Password--</th>
-            <th>--Dog Name--</th>
-            <th>--Age--</th>
-            <th>--Breed-- </th>
-            <th>--Gender-- </th>
-            <th>--Size--</th>
-            
-        </tr>
-    </thead>
-    {% for profile in profiles%}
-      <tr>
-        <td>{{profile.fname}}</td>
-        <td>{{profile.lname}}</td>
-        <td>{{profile.email}}</td>
-        <td>{{profile.password}}</td>
-        <td>{{profile.dogname}}</td>
-        <td>{{profile.age}}</td>
-        <td>{{profile.breed}}</td>
-        <td>{{profile.gender}}</td>
-        <td>{{profile.size}}</td>
-
-    </tr>
-    {%endfor%}
-</table>

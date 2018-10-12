@@ -39,7 +39,7 @@ class Dog(db.Model):
     gender = db.Column(db.String(7), nullable=True)
     size = db.Column(db.String(7), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    photo = db.Column(db.String(100), nullable=True)
+    pic = db.Column(db.String(100), nullable=True)
 
 
     user = db.relationship('User', backref = 'dogs')
@@ -58,7 +58,7 @@ class Log(db.Model):
     # date = db.Column(db.DateTime, nullable=False)
     dog_id = db.Column(db.Integer, db.ForeignKey('dogs.dog_id'), nullable=False)
     checkin = db.Column(db.DateTime, nullable=False)
-    checkout = db.Column(db.DateTime, nullable=False)
+    checkout = db.Column(db.DateTime, nullable=True)
 
     dog = db.relationship('Dog', backref = 'logs')
 

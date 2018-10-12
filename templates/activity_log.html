@@ -10,19 +10,32 @@
 <table>
     <thead>
         <tr>
+            <th>--Dog Name--</th>
             <th>--Check-in Time--  </th>
             <th>--Check-out Time--  </th>
         </tr>
     </thead>
+<!--     <tr>
+        {%for dog in dogs%}
+        <td>{{dog.dogname}}</td>
+        {%endfor%}
 
+    
     {% for log in logs%}
-      <tr>
         <td>{{log.checkin}}</td>
         <td>{{log.checkout}}</td>
-       
-    </tr>
+    
     {%endfor%}
-
+    </tr>
+ -->
 </table>
+{%for dog in dogs%}
+    {%for log in logs%}
+    <p>Dog Name: {{dog.dogname}} 
+        <td>{{log.checkin}}</td> 
+        <td> {{log.checkout}}</td>
+    </p>
+    {%endfor%}
+{%endfor%}
 
 {% endblock %}
