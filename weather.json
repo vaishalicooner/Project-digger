@@ -1,0 +1,43 @@
+{
+    "coord": {
+        "lon": -122.04,
+        "lat": 37.37
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01d"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 293.25,
+        "pressure": 1015,
+        "humidity": 60,
+        "temp_min": 289.15,
+        "temp_max": 297.55
+    },
+    "visibility": 16093,
+    "wind": {
+        "speed": 3.6,
+        "deg": 350
+    },
+    "clouds": {
+        "all": 1
+    },
+    "dt": 1539546960,
+    "sys": {
+        "type": 1,
+        "id": 428,
+        "message": 0.0048,
+        "country": "US",
+        "sunrise": 1539526569,
+        "sunset": 1539567065
+    },
+    "id": 5400075,
+    "name": "Sunnyvale",
+    "cod": 200
+
+}

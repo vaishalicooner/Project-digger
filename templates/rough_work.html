@@ -1,0 +1,112 @@
+<div>          
+    {% if session.get('user_id') %}
+        <button type='button'><a href="/checkout">Check out</a></button>
+    {% else %}
+        <button type="button"><a href="/checkin">Check in</a></button>
+    {% endif %}
+</div>
+
+
+<script>
+  "use strict";
+  
+    let button = $('#checkin');
+
+    function checkin_click(evt) {
+    evt.preventDefault();
+    if (button.html() === "Check-in") 
+    {
+        $.get('/checkin', function(data) 
+        {
+            console.log(data)
+        })
+      button.html("Check-out");
+    }
+    else if (button.html() === "Check-out")
+    {
+        $.get('/checkout', function(result)
+        {
+            console.log(result)
+        })
+        button.html("Check-in");
+    }
+  }
+button.on('click', checkin_click)
+
+ </script>  
+
+<script>
+let formInputs = {
+    "dog_id": $("#checkin").val()
+}
+
+$.post("/checkin", formInputs, checkin_click);
+</script>
+
+ 
+<script>
+let data = {'dog_id' : []};
+$("#checkin").each(function() {
+    data['dog_id'].push(${this).val());
+});
+$.post("/checkin", data);
+</script>
+
+<!-- <form>
+{% for dog in dog_profiles.dogs %}
+<input type="checkbox" name="dog" value="dog">{{dog.dogname}}
+{% endfor %}
+</form> -->
+
+@app.route("/get_weather")
+def weather():
+
+    url = 'http://api.openweathermap.org/data/2.5/weather?q=Sunnyvale'
+    data = {'x-api-key': '6a41599a2f18db03557355bcffc7185c', }
+    # response = requests.get(url, headers=headers)
+    response = requests.get(url, params=data)
+    result = response.json
+    final_result = result['weather'][0]['main']
+    return final_result
+    # return jsonify({'temp' : final_result})
+
+<script>
+    let weather_button = $('#weather');
+    function getWeather(evt) {
+        evt.preventDefault();
+        $.get('/get_weather', function(data) 
+        {
+            console.log(data)
+        })
+    }
+weather_button.on('click', getWeather)
+</script>
+
+
+
+
+# @app.route('/upload_pic', methods=['POST'])
+# def upload_file():
+
+#     dogname = request.form.get("dogname")
+#     age = request.form.get("age")
+#     breed = request.form.get("breed")
+#     gender = request.form.get("gender")
+#     size = request.form.get("size")
+#     pic = request.form.get("pic")
+
+#     user = User.query.get(session['user_id'])
+
+#     new_dog = Dog(dogname=dogname, age=age, breed=breed, 
+#         gender=gender, size=size, user=user)
+
+#     db.session.add(new_dog)
+#     db.session.commit()
+#     dog_id = str(new_dog.dog_id)
+
+
+
+# @app.route('/upload/<filename>')
+# def uploaded_file(filename):
+#     return send_from_directory(app.config['UPLOAD_FOLDER'],
+#                                filename)

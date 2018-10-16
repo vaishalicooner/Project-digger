@@ -30,9 +30,9 @@ def load_users():
 
     print("dogs")
 
-    dog1 = Dog(dogname="fluffy", age=3, breed="havanese", gender="female", 
+    dog1 = Dog(dogname="Fluffy", age=3, breed="Havanese", gender="female", 
         size="small", pic="abc", user=user1)
-    dog2 = Dog(dogname="boris", age=2, breed="minpin", gender="male",
+    dog2 = Dog(dogname="Boris", age=2, breed="Minpin", gender="male",
         size="small", pic="def", user=user2)
 
     # We need to add to the session or it won't ever be smovies (movie_id, title, released_at, imdb_url) VALUES (%(movie_id)s, %(title)s, %(released_at)s, %(imdb_url)s)'] [parameters: ({'movie_id': '1', 'title': None, 'released_at': datetime.datetime(1995, 1, 1, 0, 0), 'imdb_url': None}, {'movie_id': '2', 'title': None, 'released_at': datetime.datetime(1995, 1, 1, 0, 0), 'imdb_url': None}, {'movie_id': '3', 'title': None, 'released_at': datetime.datetime(1995, 1, 1, 0, 0), 'imdb_url': None}, {'movie_id': '4', 'title': None, 'released_at': datetime.datetime(1995, 1, 1, 0, 0), 'imdb_url': None}, {'movie_id': '5', 'title': None, 'released_at': datetime.datetime(1995, 1, 1, 0, 0), 'imdb_url': None}, {'movie_id': '6', 'title': None, 'released_at': datetime.datetime(1995, 1, 1, 0, 0), 'imdb_url': None}, {'movie_id': '7', 'title': None, 'released_at': datetime.datetime(1995, 1, 1, 0, 0), 'imdb_url': None}, {'movie_id': '8', 'title': None, 'released_at': datetime.datetime(1995, 1, 1, 0, 0), 'imdb_url': None}  ... displaying 10 of 1681 total bound parameter sets ...  {'movie_id': '1681', 'title': None, 'released_at': datetime.datetime(1994, 1, 1, 0, 0), 'imdb_url': None}, {'movie_id': '1682tored

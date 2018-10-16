@@ -57,8 +57,8 @@ class Log(db.Model):
     log_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     # date = db.Column(db.DateTime, nullable=False)
     dog_id = db.Column(db.Integer, db.ForeignKey('dogs.dog_id'), nullable=False)
-    checkin = db.Column(db.DateTime, nullable=False)
-    checkout = db.Column(db.DateTime, nullable=True)
+    checkin = db.Column(db.DateTime(timezone=True), nullable=False)
+    checkout = db.Column(db.DateTime(timezone=True), nullable=True)
 
     dog = db.relationship('Dog', backref = 'logs')
 

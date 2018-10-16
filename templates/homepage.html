@@ -8,10 +8,28 @@
 <button><a href="/homepage">Home</a></button>
 <button><a href="/activity_log">Activity Log</a></button>
 <button><a href="/profile">Profile</a></button>
-<button><a href="/logout">Logout</a></button><br><br>
+<button><a href="/logout">Logout</a></button>
+<br><br>
 <form>
-    <button><a href="/add_another">Add another dog</a></button>
+    <button><a href="/add_dog">Add dog</a></button>
 </form>
+
+<!--  WEATHER API  -->
+
+<div> 
+    <h3><i> Weather </i> </h3>
+    <img src = http://openweathermap.org/img/w/01d.png>
+    <p><b> Weather: </b>
+        {{weather["description"]}}<br>
+        <b> Temperature: </b>
+        {{weather["temp"]}}F<br>
+    </p>
+</div>
+<a href="https://www.accuweather.com/en/us/sunnyvale-ca/94087/weather-forecast/331979" class="aw-widget-legal">
+
+<!-- By accessing and/or using this code snippet, you agree to AccuWeather’s terms and conditions (in English) which can be found at https://www.accuweather.com/en/free-weather-widgets/terms and AccuWeather’s Privacy Statement (in English) which can be found at https://www.accuweather.com/en/privacy. -->
+
+</a><div id="awcc1539557126424" class="aw-widget-current"  data-locationkey="331979" data-unit="f" data-language="en-us" data-useip="false" data-uid="awcc1539557126424"></div><script type="text/javascript" src="https://oap.accuweather.com/launch.js"></script>
 <br>
 <br>
 
@@ -26,38 +44,50 @@
     {%endfor%}
 </table>
 
-<p><img src = "https://lh3.googleusercontent.com/ECiRImhQuPDQj8yRj6TCo_7cxqueZlf5m0UeljycFqXyFsfSAIes3xeiJaNZA0SCgN0vdmpQJR-ltJOSvsIs2qwDeWLwUM0xmZbtAYTfc2c3hQn5GaoAfOIXa-WSz-nI_FEHHuLFMTtx6cESHZ9yFczR1gCB04tm4gd8E5PF1fpccXbFUIR8wubrC_BcuQXxb0QS00iXuDY9DHrZ5qLpruJC1rHXuQjoljLKwRbMAYV-WAZq6SM1RR0WA21rKa0avB4kFmFsGmrEXSka_WwS1igNH-_L6_wsEeoX8HsExan3uLwdsRydjby1FheUTVrdEK-XmHMiLkDkYNOEUdSiBL3AVb6M5Y0JUByRF38LQyuTpJek_PIadvFC6oA-Gn5sj-iUxc7M64n4x7DR2l-3IOKYw9rNIPDunpvYKZIOebqCeRiFYza1WF2KOMWeMwqEJvoar9JxCBXVqHkNM2rJEMqON45JgFnZ4bX_cAZNUQmjwP5Y76uNs0P6qQTxUZHWOmilHe5mxSMPep54n6Erf6dd0gV5ffq0Dfi3x69F9b0UOuENLMSo8ZC4BFUYR-6RphEBgX9WkcAVRMLWH7hFUPtBpfcVzZFcX7BmmqUZ569RXDP8-AH79o6viJPGaN_4_lCOf4pn4CGadpRaX7oLg634nDrU2_A4DLO2psSIu9EVDjxJL68hmBROhQ=w628-h837-no" width="200" height="200"></p>
-<form>
-{% for dog in my_dogs %}
-<input type="checkbox" name="dog" value="dog">{{dog.dogname}}
+{% for pic in dog_profiles.dogs%}
+<p><img src =  'static/upload/{{pic.pic}}' width="300" height="200"></p>
 {% endfor %}
-</form>
-<br><br>
+
+<!--  GETTING DOG PICTURE FROM DATABASE  -->
+
+<!-- <p><img src =  "/static/upload/{{dog.pic}}" ></p> -->
+
+<!--  GETTING USERS DOGS -->
+<form id = "checkin_form" method="POST">
+{% for dog in dog_profiles.dogs %}
+<input type="checkbox" name="dog" value="{{dog.dog_id}}">{{dog.dogname}}
+{% endfor %}
+</form><br>
+
 <button id = "checkin" value = "Check-in">Check-in</button>
 <script>
   "use strict";
   
-  let button = $('#checkin');
+    let button = $('#checkin');
 
-function checkin_click(evt) {
-    evt.preventDefault();
-    if (button.html() === "Check-in") 
-    {
-        $.get('/checkin', function(data) 
+    function checkin_click(evt) {
+        evt.preventDefault();
+        
+        if (button.html() === "Check-in") 
         {
-            console.log(data)
-        })
-      button.html("Check-out");
-    }
-    else if (button.html() === "Check-out")
-    {
-        $.get('/checkout', function(result)
+            let form_data = $("#checkin_form").serialize();
+            console.log(form_data);
+            $.post('/checkin', form_data, function(data) 
+            {
+                console.log(data)
+            })
+          button.html("Check-out");
+        }
+        else if (button.html() === "Check-out")
         {
-            console.log(result)
-        })
-        button.html("Check-in");
+            let form_data = $("#checkin_form").serialize();
+            $.post('/checkout', form_data, function(result)
+            {
+                console.log(result)
+            })
+            button.html("Check-in");
+        }
     }
-  }
 button.on('click', checkin_click)
 
  </script>  
