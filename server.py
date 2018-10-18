@@ -134,6 +134,7 @@ def home():
     profile_data = User.query.options(db.joinedload('dogs')).get(session['user_id'])
 
     dog = db.session.query(Dog.pic)
+
     return render_template('homepage.html', logs=present_log, dog_profiles=profile_data, 
         weather=weather, dog=dog)
 
@@ -176,40 +177,43 @@ def profile():
 def checkin():
 
     dogs = request.form.getlist('dog')
-    print(dogs);
-    
     pacific = pytz.timezone('US/Pacific')
     in_time = datetime.now(tz=pacific)
     
-    
+    dog_names = []
+
     for dog_id in dogs:
-        check_in_time = Log(checkin=in_time, dog_id=int(dog_id))
-        db.session.add(check_in_time)
-        db.session.commit()
-    
-    return jsonify({'check_in_time': in_time})
-    # return jsonify({'check_in_time': in_time}, {'dog_id': dog_id})
+
+        dog = Dog.query.get(dog_id)
+        checkedin = Log.query.filter_by(dog_id=dog_id).filter(Log.checkout.is_(None)).first()
+
+        if checkedin:
+            print("You are already checked in.")
+        else:
+            check_in_time = Log(checkin=in_time, dog=dog)
+            dog_names.append(dog.dogname)
+            db.session.add(check_in_time)
+            db.session.commit()
+
+    checkin_dogs = Dog.query.join(Log).filter(Log.checkout.is_(None))
+    checkedin_names = [ dog.dogname for dog in checkin_dogs ]
+    return jsonify({'check_in_time': in_time, 'dog_names': dog_names, 'checkedin_dogs': checkedin_names}) # include dog_names as a key/value pair
 
 
 @app.route('/checkout', methods=['POST'])
 def checkout():
 
-    dogs = request.form.getlist('dog')
-    print(dogs)
+    dog_ids = request.form.getlist('dog')
     pacific = pytz.timezone('US/Pacific')
     out_time = datetime.now(tz=pacific)
-    profile_data = User.query.options(db.joinedload('dogs')).get(session['user_id'])
-    
-    log_data = Log.query.filter_by(dog_id=profile_data.dogs[0].dog_id, checkout=None).one()
 
-    log_data.checkout = out_time
-    db.session.commit()
+    # profile_data = User.query.options(db.joinedload('dogs')).get(session['user_id'])
+    # log_data = Log.query.filter_by(dog_id=profile_data.dogs[0].dog_id, checkout=None).one()
 
-    # for dog_id in dogs:
-
-    #     log_data.checkout = out_time
-       
-    #     db.session.commit()
+    for dog_id in dog_ids:
+        log_data = Log.query.filter_by(dog_id=int(dog_id), checkout=None).one()
+        log_data.checkout = out_time
+        db.session.commit()
     
     return jsonify({'check_out_time': out_time})
 

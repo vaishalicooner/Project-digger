@@ -33,7 +33,7 @@
 <br>
 <br>
 
-<table align="right">
+<table id="checkedin_dogs" align="right">
     <thead>
             <th> List of dogs at present!</th>    
     </thead>
@@ -60,35 +60,97 @@
 </form><br>
 
 <button id = "checkin" value = "Check-in">Check-in</button>
+<button id = "checkout" value = "Check-out">Check-out</button><br><br>
+<!-- <div id="message">
+    {% for dog in dog_profiles.dogs %}
+    {{dog.dog_id}} checked in at:
+    {% endfor%}
+</div> -->
+
+<div id="message"></div>
+<!-- 
 <script>
   "use strict";
   
-    let button = $('#checkin');
+    let button1 = $('#checkin');
 
     function checkin_click(evt) {
         evt.preventDefault();
         
-        if (button.html() === "Check-in") 
-        {
             let form_data = $("#checkin_form").serialize();
             console.log(form_data);
             $.post('/checkin', form_data, function(data) 
             {
                 console.log(data)
+                $('#message').html('{{dog_name}} checked in: ' + data.check_in_time);
             })
-          button.html("Check-out");
         }
-        else if (button.html() === "Check-out")
+
+    button1.on('click', checkin_click)
+
+
+    let button2 = $('#checkout');
+
+    function checkout_click(evt) {
+        evt.preventDefault();
+    
+        let form_data = $("#checkin_form").serialize();
+        console.log(form_data);
+        $.post('/checkout', form_data, function(data)
         {
-            let form_data = $("#checkin_form").serialize();
-            $.post('/checkout', form_data, function(result)
-            {
-                console.log(result)
-            })
-            button.html("Check-in");
-        }
+            console.log(data)
+
+            $('#message').html('{{dog_name}} checked out: ' + data.check_out_time);
+        })
+        
     }
-button.on('click', checkin_click)
+
+    button2.on('click', checkout_click)
+
+ </script>   -->
+
+
+<script>
+  "use strict";
+  
+    let button1 = $('#checkin');
+
+    function checkin_click(evt) {
+        evt.preventDefault();
+        
+            let form_data = $("#checkin_form").serialize();
+            console.log(form_data);
+            $.post('/checkin', form_data, function(data) 
+            {
+                console.log(data)
+               for (let name in data.checkedin_dogs) {
+                console.log(name)
+                // $('#checkedin_dogs').html('{{name}} checked in: ' + data.check_in_time);
+               }
+                
+            })
+        }
+
+    button1.on('click', checkin_click)
+
+
+    let button2 = $('#checkout');
+
+    function checkout_click(evt) {
+        evt.preventDefault();
+    
+        let form_data = $("#checkin_form").serialize();
+        console.log(form_data);
+        $.post('/checkout', form_data, function(data)
+        {
+            console.log(data);
+           
+            $('#message').html('{{dog_name}} checked out: ' + data.check_out_time);
+        })
+        
+    }
+
+    button2.on('click', checkout_click)
 
  </script>  
 

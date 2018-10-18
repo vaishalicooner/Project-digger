@@ -1,62 +1,60 @@
-<div>          
-    {% if session.get('user_id') %}
-        <button type='button'><a href="/checkout">Check out</a></button>
-    {% else %}
-        <button type="button"><a href="/checkin">Check in</a></button>
-    {% endif %}
-</div>
 
 
 <script>
   "use strict";
   
-    let button = $('#checkin');
+    let button1 = $('#checkin');
 
     function checkin_click(evt) {
-    evt.preventDefault();
-    if (button.html() === "Check-in") 
-    {
-        $.get('/checkin', function(data) 
+        evt.preventDefault();
+        
+            let form_data = $("#checkin_form").serialize();
+            console.log(form_data);
+            $.post('/checkin', form_data, function(data) 
+            {
+                console.log(data)
+               for (let name in data.checkedin_names) {
+            
+                $('#checkedin_dogs').html('{{name}} checked in: ' + data.check_in_time);
+               }
+                
+            })
+        }
+
+    button1.on('click', checkin_click)
+
+
+    let button2 = $('#checkout');
+
+    function checkout_click(evt) {
+        evt.preventDefault();
+    
+        let form_data = $("#checkin_form").serialize();
+        console.log(form_data);
+        $.post('/checkout', form_data, function(data)
         {
-            console.log(data)
+            console.log(data);
+           
+            $('#message').html('{{dog_name}} checked out: ' + data.check_out_time);
+            {% endfor %}
         })
-      button.html("Check-out");
+        
     }
-    else if (button.html() === "Check-out")
-    {
-        $.get('/checkout', function(result)
-        {
-            console.log(result)
-        })
-        button.html("Check-in");
-    }
-  }
-button.on('click', checkin_click)
+
+    button2.on('click', checkout_click)
 
  </script>  
 
-<script>
-let formInputs = {
-    "dog_id": $("#checkin").val()
-}
-
-$.post("/checkin", formInputs, checkin_click);
-</script>
-
- 
-<script>
-let data = {'dog_id' : []};
-$("#checkin").each(function() {
-    data['dog_id'].push(${this).val());
-});
-$.post("/checkin", data);
-</script>
-
-<!-- <form>
-{% for dog in dog_profiles.dogs %}
-<input type="checkbox" name="dog" value="dog">{{dog.dogname}}
+ {% for dogname in dog_names %}
+                {% if loop.first and loop.length <=2 %}
+                    {{dogname}} 
+                {% elif loop.last %}
+                    and {{dogname}}
+                {% else %}
+                    {{dogname}},
+                {% endif %}
 {% endfor %}
-</form> -->
+
 
 @app.route("/get_weather")
 def weather():
