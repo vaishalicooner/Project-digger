@@ -179,6 +179,7 @@ def checkin():
     dogs = request.form.getlist('dog')
     pacific = pytz.timezone('US/Pacific')
     in_time = datetime.now(tz=pacific)
+    # present_log = Log.query.options(db.joinedload('dog')).filter(Log.checkout.is_(None)).all()
     
     dog_names = []
 
@@ -188,7 +189,8 @@ def checkin():
         checkedin = Log.query.filter_by(dog_id=dog_id).filter(Log.checkout.is_(None)).first()
 
         if checkedin:
-            print("You are already checked in.")
+            # print("You are already checked in.")
+            flash("You are already checked in.")
         else:
             check_in_time = Log(checkin=in_time, dog=dog)
             dog_names.append(dog.dogname)

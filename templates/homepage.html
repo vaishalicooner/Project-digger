@@ -33,15 +33,20 @@
 <br>
 <br>
 
-<table id="checkedin_dogs" align="right">
-    <thead>
-            <th> List of dogs at present!</th>    
-    </thead>
+<!-- LIST OF PRESENT DOGS IN DOG PARK -->
+
+<table id="mytable" align="right">
+    <tbody id="checkedin_dogs">
+        <thead>
+                <th> List of dogs at present!</th>    
+        </thead>
+        
     {% for log in logs%}
       <tr>
         <td>{{log.dog.dogname}}</td>
     </tr>
     {%endfor%}
+</tbody>
 </table>
 
 {% for pic in dog_profiles.dogs%}
@@ -68,47 +73,6 @@
 </div> -->
 
 <div id="message"></div>
-<!-- 
-<script>
-  "use strict";
-  
-    let button1 = $('#checkin');
-
-    function checkin_click(evt) {
-        evt.preventDefault();
-        
-            let form_data = $("#checkin_form").serialize();
-            console.log(form_data);
-            $.post('/checkin', form_data, function(data) 
-            {
-                console.log(data)
-                $('#message').html('{{dog_name}} checked in: ' + data.check_in_time);
-            })
-        }
-
-    button1.on('click', checkin_click)
-
-
-    let button2 = $('#checkout');
-
-    function checkout_click(evt) {
-        evt.preventDefault();
-    
-        let form_data = $("#checkin_form").serialize();
-        console.log(form_data);
-        $.post('/checkout', form_data, function(data)
-        {
-            console.log(data)
-
-            $('#message').html('{{dog_name}} checked out: ' + data.check_out_time);
-        })
-        
-    }
-
-    button2.on('click', checkout_click)
-
- </script>   -->
-
 
 <script>
   "use strict";
@@ -123,11 +87,18 @@
             $.post('/checkin', form_data, function(data) 
             {
                 console.log(data)
-               for (let name in data.checkedin_dogs) {
+                $("#mytable tbody").empty();
+                let names = "";
+
+               for (let name of data.checkedin_dogs) {
                 console.log(name)
-                // $('#checkedin_dogs').html('{{name}} checked in: ' + data.check_in_time);
-               }
                 
+                // $('#message').html(name + ' checked in at : ' + data.check_in_time);
+                let new_row = "<tr><td>" + name + "</td></tr>";
+                // $("#checkedin_dogs").append(name);
+                $("#checkedin_dogs").append(new_row);
+            }
+            $('#message').html(name + ' checked in at : ' + data.check_in_time);
             })
         }
 
@@ -145,7 +116,9 @@
         {
             console.log(data);
            
-            $('#message').html('{{dog_name}} checked out: ' + data.check_out_time);
+        $('#message').html('checked out at : ' + data.check_out_time);
+        // $("#checkedin_dogs").remove(new_row);
+
         })
         
     }
