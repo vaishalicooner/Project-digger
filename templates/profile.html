@@ -17,6 +17,7 @@
 
 <!-- jinja for loop for dog in profiles.dogs.... -->
 {% for dog in profiles.dogs %}
+    <p><img src =  'static/upload/{{dog.pic}}' width="300" height="200"></p>
     <p>Dog Name: {{dog.dogname}}</p>
     <p>Age: {{dog.age}}</p>
     <p>Breed: {{dog.breed}}</p>

@@ -8,13 +8,14 @@ from flask_debugtoolbar import DebugToolbarExtension
 from model import User, Dog, Log, connect_to_db, db
 from werkzeug.utils import secure_filename
 from datetime import datetime
+from pytz import timezone
 
 UPLOAD_FOLDER = 'static/upload'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 # app.jinja_env.undefined = StrictUndefined
 
-# weather_api_key = os.environ['WEATHERs_API']
+# weather_api_key = os.environ['WEATHER_API']
 # url = 'http://api.openweathermap.org/data/2.5/weather?q=Sunnyvale'
 
 app = Flask(__name__)
@@ -177,9 +178,16 @@ def profile():
 def checkin():
 
     dogs = request.form.getlist('dog')
-    pacific = pytz.timezone('US/Pacific')
-    in_time = datetime.now(tz=pacific)
-    # present_log = Log.query.options(db.joinedload('dog')).filter(Log.checkout.is_(None)).all()
+    # pacific = pytz.timezone('US/Pacific')
+    # in_time = datetime.now(tz=pacific)
+
+    in_time = datetime.now(tz=pytz.timezone('US/Pacific'))
+    # in_time = datetime.now(tz=pytz.utc)
+    # in_time = in_time.astimezone(timezone("US/Pacific"))
+
+    # utc_dt = pytz.utc.localize(datetime.utcnow())
+    # pst_tz = timezone("US/Pacific")
+    # in_time = pst_tz.normalize(utc_dt.astimezone(pst_tz))
     
     dog_names = []
 
@@ -189,7 +197,6 @@ def checkin():
         checkedin = Log.query.filter_by(dog_id=dog_id).filter(Log.checkout.is_(None)).first()
 
         if checkedin:
-            # print("You are already checked in.")
             flash("You are already checked in.")
         else:
             check_in_time = Log(checkin=in_time, dog=dog)
@@ -208,9 +215,6 @@ def checkout():
     dog_ids = request.form.getlist('dog')
     pacific = pytz.timezone('US/Pacific')
     out_time = datetime.now(tz=pacific)
-
-    # profile_data = User.query.options(db.joinedload('dogs')).get(session['user_id'])
-    # log_data = Log.query.filter_by(dog_id=profile_data.dogs[0].dog_id, checkout=None).one()
 
     for dog_id in dog_ids:
         log_data = Log.query.filter_by(dog_id=int(dog_id), checkout=None).one()
@@ -244,6 +248,7 @@ def get_weather():
     weather_temp = round((1.8 * (temp - 273)) +32)
 
     weather_dict = {"description": weather_dis, "temp": weather_temp}
+
 
     return weather_dict
 

@@ -2,7 +2,7 @@
 {% block content %}
 <!-- <h1> Welcome to Digger. Your dogs playground! </h1> -->
 
-<p> Welcome to Digger. Your dogs playground! </p>
+<p>Welcome to Digger. Your dogs playground!</p>
  
 <button><a href="/all_dogs">All Dogs</a></button>
 <button><a href="/homepage">Home</a></button>
@@ -26,8 +26,6 @@
     </p>
 </div>
 <a href="https://www.accuweather.com/en/us/sunnyvale-ca/94087/weather-forecast/331979" class="aw-widget-legal">
-
-<!-- By accessing and/or using this code snippet, you agree to AccuWeather’s terms and conditions (in English) which can be found at https://www.accuweather.com/en/free-weather-widgets/terms and AccuWeather’s Privacy Statement (in English) which can be found at https://www.accuweather.com/en/privacy. -->
 
 </a><div id="awcc1539557126424" class="aw-widget-current"  data-locationkey="331979" data-unit="f" data-language="en-us" data-useip="false" data-uid="awcc1539557126424"></div><script type="text/javascript" src="https://oap.accuweather.com/launch.js"></script>
 <br>
@@ -66,11 +64,6 @@
 
 <button id = "checkin" value = "Check-in">Check-in</button>
 <button id = "checkout" value = "Check-out">Check-out</button><br><br>
-<!-- <div id="message">
-    {% for dog in dog_profiles.dogs %}
-    {{dog.dog_id}} checked in at:
-    {% endfor%}
-</div> -->
 
 <div id="message"></div>
 
@@ -93,14 +86,24 @@
                for (let name of data.checkedin_dogs) {
                 console.log(name)
                 
-                // $('#message').html(name + ' checked in at : ' + data.check_in_time);
                 let new_row = "<tr><td>" + name + "</td></tr>";
                 // $("#checkedin_dogs").append(name);
                 $("#checkedin_dogs").append(new_row);
             }
-            $('#message').html(name + ' checked in at : ' + data.check_in_time);
-            })
-        }
+
+            // for (let name of data.checkedin_dogs){
+            //     if ((data.checkedin_dogs).length <= 2){
+                        // (name)
+            // }
+
+        //     for (let name of data.checkedin_dogs){
+        //     $('#message').html(name +'and'+ name + ' checked in at : ' + data.check_in_time);
+        // }
+        $('#message').html(name + ' checked in at : ' + data.check_in_time);
+            // }
+
+        })
+    }
 
     button1.on('click', checkin_click)
 

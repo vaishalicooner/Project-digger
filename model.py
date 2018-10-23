@@ -57,8 +57,8 @@ class Log(db.Model):
     log_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     # date = db.Column(db.DateTime, nullable=False)
     dog_id = db.Column(db.Integer, db.ForeignKey('dogs.dog_id'), nullable=False)
-    checkin = db.Column(db.DateTime(timezone=True), nullable=False)
-    checkout = db.Column(db.DateTime(timezone=True), nullable=True)
+    checkin = db.Column(db.TIMESTAMP(timezone=True), nullable=False)
+    checkout = db.Column(db.TIMESTAMP(timezone=True), nullable=True)
 
     dog = db.relationship('Dog', backref = 'logs')
 
@@ -69,11 +69,11 @@ class Log(db.Model):
 
 
 
-def connect_to_db(app):
+def connect_to_db(app, db_uri='postgresql:///digger'):
     """Connect the database to our Flask app."""
 
     # Configure to use our PstgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///digger'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
