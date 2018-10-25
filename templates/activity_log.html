@@ -6,7 +6,8 @@
 <button><a href="/activity_log">Activity Log</a></button>
 <button><a href="/profile">Profile</a></button>
 <button><a href="/logout">Logout</a></button><br><br>
-<h1>Dogs Activity Log</h1><br>
+<h1>Activity Log</h1><br>
+
 <table>
     <thead>
         <tr>
@@ -15,27 +16,15 @@
             <th>--Check-out Time--  </th>
         </tr>
     </thead>
-    <tr>
-        {%for dog in dogs%}
-        <td>{{dog.dogname}}</td>
-        {%endfor%}
-
-    
+    <tbody>
     {% for log in logs%}
+    <tr>
+        <td>{{log.dog.dogname}}</td>
         <td>{{log.checkin}}</td>
         <td>{{log.checkout}}</td>
-    
-    {%endfor%}
     </tr>
-
-</table>
-<!-- {%for dog in dogs%}
-    {%for log in logs%}
-    <p>Dog Name: {{dog.dogname}} 
-        <td>{{log.checkin}}</td> 
-        <td> {{log.checkout}}</td>
-    </p>
     {%endfor%}
-{%endfor%} -->
+    </tbody>
+</table>
 
 {% endblock %}

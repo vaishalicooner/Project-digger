@@ -1,6 +1,7 @@
 from jinja2 import StrictUndefined
 import os
 import json
+import hashlib
 import pytz
 import requests
 from flask import (Flask, render_template, jsonify, redirect, request, flash, session, url_for, send_from_directory)
@@ -13,12 +14,11 @@ from pytz import timezone
 UPLOAD_FOLDER = 'static/upload'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
-# app.jinja_env.undefined = StrictUndefined
-
 # weather_api_key = os.environ['WEATHER_API']
 # url = 'http://api.openweathermap.org/data/2.5/weather?q=Sunnyvale'
 
 app = Flask(__name__)
+app.jinja_env.undefined = StrictUndefined
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.secret_key = "ABC"
@@ -33,6 +33,11 @@ def logged_in():
 
     email = request.form.get("email")
     password = request.form.get("password")
+    # password = password.encode()
+    # user_hash_pwd = hashlib.sha256(password)
+    # user_hash_pwd = user_hash_pwd.hexdigest()
+
+    # print(user_hash_pwd)
 
     # user_name = User.query.get(session['user_id'])
     user = User.query.filter_by(email = email).first()
@@ -41,10 +46,10 @@ def logged_in():
         flash("No such user")
         return redirect("/")
 
+    # if user.password == user_hash_pwd:
     if user.password == password:
         session['user_id']= user.user_id
         return redirect('/homepage')
-        # return redirect('/homepage')
     else:
         flash("Incorrect password")
         return redirect("/")
@@ -161,10 +166,14 @@ def all_dogs():
 @app.route('/activity_log')
 def activity_log():
 
-    logs_from_db = Log.query.all()
-    dogs_from_db = Dog.query.all()
-    # logs_from_db = Log.query.options(db.joinedload('logs')).get(session['dog_id'])
-    return render_template('activity_log.html', logs=logs_from_db, dogs=dogs_from_db)
+    logs_from_db = Log.query.options(db.joinedload('dog')).all()
+    date_format = '%m/%d/%Y %H:%M %p'
+
+    for log in logs_from_db:
+        log.checkin = log.checkin.astimezone(timezone('US/Pacific')).strftime(date_format)
+        log.checkout = log.checkout.astimezone(timezone('US/Pacific')).strftime(date_format)
+    
+    return render_template('activity_log.html', logs=logs_from_db)
 
 
 @app.route('/profile')
@@ -178,16 +187,9 @@ def profile():
 def checkin():
 
     dogs = request.form.getlist('dog')
-    # pacific = pytz.timezone('US/Pacific')
-    # in_time = datetime.now(tz=pacific)
-
+    date_format = '%m/%d/%Y %H:%M %p'
     in_time = datetime.now(tz=pytz.timezone('US/Pacific'))
-    # in_time = datetime.now(tz=pytz.utc)
-    # in_time = in_time.astimezone(timezone("US/Pacific"))
-
-    # utc_dt = pytz.utc.localize(datetime.utcnow())
-    # pst_tz = timezone("US/Pacific")
-    # in_time = pst_tz.normalize(utc_dt.astimezone(pst_tz))
+    print(in_time)
     
     dog_names = []
 
@@ -204,6 +206,7 @@ def checkin():
             db.session.add(check_in_time)
             db.session.commit()
 
+    in_time = in_time.strftime(date_format)
     checkin_dogs = Dog.query.join(Log).filter(Log.checkout.is_(None))
     checkedin_names = [ dog.dogname for dog in checkin_dogs ]
     return jsonify({'check_in_time': in_time, 'dog_names': dog_names, 'checkedin_dogs': checkedin_names}) # include dog_names as a key/value pair
@@ -213,14 +216,16 @@ def checkin():
 def checkout():
 
     dog_ids = request.form.getlist('dog')
-    pacific = pytz.timezone('US/Pacific')
-    out_time = datetime.now(tz=pacific)
+    date_format = '%m/%d/%Y %H:%M %p'
+    out_time = datetime.now(tz=pytz.timezone('US/Pacific'))
 
     for dog_id in dog_ids:
         log_data = Log.query.filter_by(dog_id=int(dog_id), checkout=None).one()
         log_data.checkout = out_time
         db.session.commit()
-    
+
+    out_time = out_time.strftime(date_format)
+
     return jsonify({'check_out_time': out_time})
 
 @app.route("/logout")
@@ -234,13 +239,15 @@ def logged_out():
 
 def get_weather():
 
-    # user = User.query.filter_by(email=session["email"]).first()
 
     # weather = requests.get("http://api.openweathermap.org/data/2.5/weather?q=Sunnyvale")
     # weather_json = weather.text 
     weather_json = open("weather.json").read()
 
     weather_info = json.loads(weather_json)
+
+    # headers = {'x-api-key': weather_api_key}
+    # response = requests.get(url, headers=headers)
     weather_dis = weather_info["weather"][0]["description"]
     # weather_icon = weather_info["weather"][0]["icon"]
 

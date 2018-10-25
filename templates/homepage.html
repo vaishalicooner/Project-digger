@@ -47,13 +47,15 @@
 </tbody>
 </table>
 
+
+
 {% for pic in dog_profiles.dogs%}
 <p><img src =  'static/upload/{{pic.pic}}' width="300" height="200"></p>
 {% endfor %}
 
 <!--  GETTING DOG PICTURE FROM DATABASE  -->
 
-<!-- <p><img src =  "/static/upload/{{dog.pic}}" ></p> -->
+
 
 <!--  GETTING USERS DOGS -->
 <form id = "checkin_form" method="POST">
@@ -129,5 +131,31 @@
     button2.on('click', checkout_click)
 
  </script>  
+
+ <!--  CHART FOR DOGS -->
+
+
+<div class="dog-chart">
+    <canvas id="lineChart" width="200" height="150"></canvas>
+    <div id="lineLegend" class="chart-legend"></div>
+</div>
+
+<script>
+    const options = {
+      responsive: true
+    };
+
+    // Make Line Chart of dogs in a week.
+    let ctx_line = $("#lineChart").get(0).getContext("2d");
+
+    $.get("/activity_log", function (data) {
+      let myLineChart = Chart.Line(ctx_line, {
+                                    type: 'line',
+                                    data: data,
+                                    options: options
+                                });
+      $("#lineLegend").html(myLineChart.generateLegend());
+    });
+</script>
 
 {% endblock %}
