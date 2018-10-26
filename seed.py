@@ -16,9 +16,9 @@ def load_users():
 
     # Delete all rows in table, so if we need to run this a second time,
     # we won't be trying to add duplicate users
-    # Log.query.delete()
-    # Dog.query.delete()
-    # User.query.delete()
+    Log.query.delete()
+    Dog.query.delete()
+    User.query.delete()
 
     user1 = User(fname="Vaishali", lname="Cooner", email="vc@gmail.com", 
         password=123, apt=1)

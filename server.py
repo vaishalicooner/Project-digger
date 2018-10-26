@@ -14,8 +14,8 @@ from pytz import timezone
 UPLOAD_FOLDER = 'static/upload'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
-# weather_api_key = os.environ['WEATHER_API']
-# url = 'http://api.openweathermap.org/data/2.5/weather?q=Sunnyvale'
+weather_api_key = os.environ['WEATHER_API']
+url = 'http://api.openweathermap.org/data/2.5/weather?q=Sunnyvale'
 
 app = Flask(__name__)
 app.jinja_env.undefined = StrictUndefined
@@ -33,11 +33,13 @@ def logged_in():
 
     email = request.form.get("email")
     password = request.form.get("password")
-    # password = password.encode()
-    # user_hash_pwd = hashlib.sha256(password)
-    # user_hash_pwd = user_hash_pwd.hexdigest()
+    password = password.encode() # converts into byte code
+    user_hash_pwd = hashlib.sha256(password) # create a SHA-256 hash object
+    user_hash_pwd = user_hash_pwd.hexdigest()  #digest is returned as a string 
+                                                #object of double length, containing 
+                                                #only hexadecimal digits.
 
-    # print(user_hash_pwd)
+    print(user_hash_pwd)
 
     # user_name = User.query.get(session['user_id'])
     user = User.query.filter_by(email = email).first()
@@ -46,8 +48,8 @@ def logged_in():
         flash("No such user")
         return redirect("/")
 
-    # if user.password == user_hash_pwd:
-    if user.password == password:
+    if user.password == user_hash_pwd:
+    # if user.password == password:
         session['user_id']= user.user_id
         return redirect('/homepage')
     else:
@@ -80,13 +82,16 @@ def signed_up():
     apt = request.form.get("apt")
     email = request.form.get("email")
     password = request.form.get("password")
+    password = password.encode()
+    user_hash_pwd = hashlib.sha256(password)
+    user_hash_pwd = user_hash_pwd.hexdigest()
     
     if User.query.filter_by(email=email).first() is not None:
         flash("User already exists.")
         return redirect('/')
 
     user_add = User(fname=fname, lname=lname, apt=apt, email=email,
-        password=password)
+        password=user_hash_pwd)
 
     db.session.add(user_add)
     db.session.commit()
@@ -161,6 +166,11 @@ def all_dogs():
 
     dogs_from_db = Dog.query.all()
     return render_template('all_dogs.html', dogs = dogs_from_db)
+
+# @app.route('/peak_time.json')
+# def peak_time():
+
+    # 
 
 
 @app.route('/activity_log')
@@ -238,23 +248,24 @@ def logged_out():
 
 
 def get_weather():
+    """Weather API"""
 
+    headers = {'x-api-key': weather_api_key}
+    response = requests.get(url, headers=headers)
+    weather_info = response.json()
 
-    # weather = requests.get("http://api.openweathermap.org/data/2.5/weather?q=Sunnyvale")
-    # weather_json = weather.text 
-    weather_json = open("weather.json").read()
+    # print(weather_info)
+    #if offline use json file 
+    # weather_json = open("weather.json").read()
+    # weather_info = json.loads(weather_json)
 
-    weather_info = json.loads(weather_json)
-
-    # headers = {'x-api-key': weather_api_key}
-    # response = requests.get(url, headers=headers)
     weather_dis = weather_info["weather"][0]["description"]
-    # weather_icon = weather_info["weather"][0]["icon"]
+    weather_icon = weather_info["weather"][0]["icon"]
 
     temp = weather_info["main"]["temp"]
     weather_temp = round((1.8 * (temp - 273)) +32)
 
-    weather_dict = {"description": weather_dis, "temp": weather_temp}
+    weather_dict = {"description": weather_dis, "temp": weather_temp, "icon": weather_icon}
 
 
     return weather_dict

@@ -18,16 +18,16 @@
 
 <div> 
     <h3><i> Weather </i> </h3>
-    <img src = http://openweathermap.org/img/w/01d.png>
+    <img src ="http://openweathermap.org/img/w/{{weather['icon']}}.png" width="120" height="120">
     <p><b> Weather: </b>
-        {{weather["description"]}}<br>
+        <b><i>{{weather["description"].upper()}}</i></b><br>
         <b> Temperature: </b>
-        {{weather["temp"]}}F<br>
+        <b>{{weather["temp"]}}F</b><br>
     </p>
 </div>
-<a href="https://www.accuweather.com/en/us/sunnyvale-ca/94087/weather-forecast/331979" class="aw-widget-legal">
+<!-- <a href="https://www.accuweather.com/en/us/sunnyvale-ca/94087/weather-forecast/331979" class="aw-widget-legal">
 
-</a><div id="awcc1539557126424" class="aw-widget-current"  data-locationkey="331979" data-unit="f" data-language="en-us" data-useip="false" data-uid="awcc1539557126424"></div><script type="text/javascript" src="https://oap.accuweather.com/launch.js"></script>
+</a><div id="awcc1539557126424" class="aw-widget-current"  data-locationkey="331979" data-unit="f" data-language="en-us" data-useip="false" data-uid="awcc1539557126424"></div><script type="text/javascript" src="https://oap.accuweather.com/launch.js"></script> -->
 <br>
 <br>
 
@@ -148,10 +148,10 @@
     // Make Line Chart of dogs in a week.
     let ctx_line = $("#lineChart").get(0).getContext("2d");
 
-    $.get("/activity_log", function (data) {
+    $.get("/peak_time.json", function (data) {
       let myLineChart = Chart.Line(ctx_line, {
                                     type: 'line',
-                                    data: data,
+                                    data: logs,
                                     options: options
                                 });
       $("#lineLegend").html(myLineChart.generateLegend());
