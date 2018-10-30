@@ -40,7 +40,7 @@
         </thead>
         
     {% for log in logs%}
-      <tr>
+      <tr id="{{log.dog.dog_id}}">
         <td>{{log.dog.dogname}}</td>
     </tr>
     {%endfor%}
@@ -81,28 +81,22 @@
             console.log(form_data);
             $.post('/checkin', form_data, function(data) 
             {
-                console.log(data)
-                $("#mytable tbody").empty();
-                let names = "";
+                if (data.message != 'OK') {
+                    alert(data.message);
+                }
+                console.log(data);
+                $('#message').html("");
 
-               for (let name of data.checkedin_dogs) {
-                console.log(name)
+               for (let dog of data.dogs) {
                 
-                let new_row = "<tr><td>" + name + "</td></tr>";
-                // $("#checkedin_dogs").append(name);
+                console.log(dog.name)
+                // add an id to each tr, which is the dog's id.
+                let new_row = `<tr id="${dog.id}"><td>` + dog.name + "</td></tr>";
+
                 $("#checkedin_dogs").append(new_row);
+                
+                $('#message').append(`<p>${dog.name} checked in at ${data.check_in_time}</p>`);
             }
-
-            // for (let name of data.checkedin_dogs){
-            //     if ((data.checkedin_dogs).length <= 2){
-                        // (name)
-            // }
-
-        //     for (let name of data.checkedin_dogs){
-        //     $('#message').html(name +'and'+ name + ' checked in at : ' + data.check_in_time);
-        // }
-        $('#message').html(name + ' checked in at : ' + data.check_in_time);
-            // }
 
         })
     }
@@ -120,12 +114,13 @@
         $.post('/checkout', form_data, function(data)
         {
             console.log(data);
-           
-        $('#message').html('checked out at : ' + data.check_out_time);
-        // $("#checkedin_dogs").remove(new_row);
-
-        })
+            // go look in the table and see if there's a row with f
         
+        for (let dog_id of data.dog_ids) {
+            $('#'+dog_id).remove();
+        }   
+        $('#message').html('checked out at : ' + data.check_out_time);
+        });   
     }
 
     button2.on('click', checkout_click)
@@ -136,25 +131,70 @@
 
 
 <div class="dog-chart">
-    <canvas id="lineChart" width="200" height="150"></canvas>
-    <div id="lineLegend" class="chart-legend"></div>
+    <canvas id="myChart" width="50" height="25"></canvas>
+    <div id="barLegend" class="chart-legend"></div>
 </div>
 
 <script>
     const options = {
-      responsive: true
+        responsive: true,
+        legend: { display: true,
+         position: "top"},
+        title: {
+            display: true,
+            position: "top",    
+        barThickness: 2
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
     };
+    
 
     // Make Line Chart of dogs in a week.
-    let ctx_line = $("#lineChart").get(0).getContext("2d");
-
+    // let ctx_bar = $("#BarChart").get(0).getContext("2d");
+    let ctx_bar = $("#myChart").get(0).getContext("2d");
+    // ctx_bar.canvas.width = 20;
+    // ctx_bar.canvas.height = 10;
+    // ctx_bar.width = 20;
+    ctx_bar.height = 10;
     $.get("/peak_time.json", function (data) {
-      let myLineChart = Chart.Line(ctx_line, {
-                                    type: 'line',
-                                    data: logs,
+        console.log(data);
+      let myChart = new Chart(ctx_bar, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: ['6am-7am',
+                                                 '7am-8am',
+                                                 '8am-9am',
+                                                 '9am-10am',
+                                                 '10am-11am',
+                                                 '11am-12pm',
+                                                 '12pm-1',
+                                                 '1pm-2pm',
+                                                 '2pm-3pm',
+                                                 '3pm-4pm',
+                                                 '4pm-5pm',
+                                                 '5pm-6pm',
+                                                 '6pm-7pm',
+                                                 '7pm-8pm',
+                                                 '8pm-9pm',
+                                                 '9pm-10pm',
+                                                 '10pm-11pm'],
+                                        datasets: [{
+                                            label: '# of dogs',
+                                            data: data,
+                                            backgroundColor:
+                                            ["#3e95cd","#33FFBD","#FF4D33","#33FFF5","#33A2FF","#33A2FF","#FF33BE","#FF3344","#E0FF33", "#33FFBD","#FF4D33","#33FFF5","#33A2FF","#33A2FF","#FF33BE","#FF3344","#E0FF33"],
+                                            borderWidth: 1
+                                        }]
+                                    },
                                     options: options
                                 });
-      $("#lineLegend").html(myLineChart.generateLegend());
+    // $("#barLegend").html(myChart.generateLegend());
     });
 </script>
 

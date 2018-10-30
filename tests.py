@@ -78,18 +78,18 @@ class TestsDatabase(unittest.TestCase):
         # Create tables and add sample data
         db.create_all()
         load_users()
-        
-        def _mock_get_weather():
 
-            return "Weather"
+        def _mock_get_weather():
+            
             server.get_weather = _mock_get_weather
+            return "Weather"
 
 
     def test_login(self):
         """Can we reach the homepage?"""
         
-        result = self.client.post("/login", data = {"email": "vaishalicooner@gmail.com", 
-            "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"}, follow_redirects=True)
+        result = self.client.post("/login", data = {"email": "vc@gmail.com", 
+            "password": "123"}, follow_redirects=True)
         self.assertIn(b"Welcome to Digger. Your dogs playground!", result.data)
         self.assertNotIn(b"Email:", result.data)
 
@@ -164,12 +164,6 @@ class TestsDatabase(unittest.TestCase):
         self.assertIn(b"Profile", result.data)
         self.assertIn(b"Vaishali", result.data)
         self.assertIn(b"Fluffy", result.data)
-
-
-    # def _mock_get_weather():
-
-    #     return "Weather"
-    #     server.get_weather = _mock_get_weather
 
           
     def tearDown(self):

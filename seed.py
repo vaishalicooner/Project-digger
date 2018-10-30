@@ -21,7 +21,7 @@ def load_users():
     User.query.delete()
 
     user1 = User(fname="Vaishali", lname="Cooner", email="vc@gmail.com", 
-        password=123, apt=1)
+        password="a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3", apt=1)
     user2 = User(fname="Heather", lname="Mahan", email="hm@gmail.com", 
         password=123, apt=1)
 
