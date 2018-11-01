@@ -56,18 +56,18 @@ def logged_in():
         flash("Incorrect password")
         return redirect("/")
 
-@app.route('/forgot_password')
-def forgot_password():
+# @app.route('/forgot_password')
+# def forgot_password():
 
-    email = request.args.get('email')
-    session['email'] = email
-    if email is None:
-        flash("This user does not exist. Please sign up!")
-        return render_template('sign_up.html')
+#     email = request.args.get('email')
+#     session['email'] = email
+#     if email is None:
+#         flash("This user does not exist. Please sign up!")
+#         return render_template('sign_up.html')
 
-    user = User.query.filter(User.email == email).first()
-    print("Your password is {}".format(User.password))   
-    return render_template('/')
+#     user = User.query.filter(User.email == email).first()
+#     print("Your password is {}".format(User.password))   
+#     return render_template('/')
 
 @app.route('/sign_up')
 def sign_up():
@@ -198,8 +198,6 @@ def peak_time():
 
     logs_from_db = Log.query.options(db.joinedload('dog')).all()
 
-    print(logs_from_db)
-
     for log in logs_from_db:
         log.checkin = log.checkin.astimezone(timezone('US/Pacific'))
         # This gets trick when a dog is not checked out
@@ -212,10 +210,6 @@ def peak_time():
                 checkin_data[hour] = checkin_data.get(hour, 0) + 1
             # if log.checkout.hour == hour:
             #     checkout_data[hour] = checkout_data.get(hour, 0) + 1
-    
-    print("CHECK IN AND OUT INFO")
-    print(checkin_data)
-    # print(checkout_data)
 
     data = [0] * 17
     for key in checkin_data:
