@@ -1,15 +1,54 @@
 {% extends 'base.html' %}
 {% block content %}
+<body class="background">
+</body>
 
-<form action="/login" method= "POST">
-    Email: <input type= "text" name="email" required>
-    Password: <input type= "password" name= "password" required>
-    <input type= "submit" value= "Login!">
-    <!-- <a href="/forgot_password">Forgot Password?</a> -->
-</form><br><br>
-<img src="http://3.bp.blogspot.com/_L4ckJQzJkOQ/Sqj9Lvhm_XI/AAAAAAAABQE/PEmIselLhig/s320/groupCatsDogs.gif" width="400" height="300">
+<nav class="navbar navbar-expand-lg navbar-info bg-info" style="background-color: #e3f2fd;">
+    
+    <a class="navbar-brand ">
+    <img src="/static/dogs.jpg" width="70" height="70" class="d-inline-block align-top" alt="">Digger
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-<form>
-     <button><a href="/sign_up">Sign-Up</a></button>
-</form>
+    <div class="collapse navbar-collapse button" id="navbarNavAltMarkup">
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <section class="col-xs-12 col-sm-12 col-md-6 col-lg-6 left">
+            <h1 id="titleleft">DIGGER</h1>
+            <p id="para">
+              Welcome to Digger, Your dogs playground!
+            </p>
+        </section>
+    </div>
+    <div>
+        <section class="col-xs-12 col-sm-12 col-md-6 col-lg-6 right">
+            <div class="col-md-4 col-md-offset-3">
+                <h2 id="signup">Login or Sign Up</h2>
+                <form action="/login" method= "POST">
+                    <div>
+                        <label for="exampleInputEmail1"></label>
+                        <input type="email" name="email" class="form" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required="">
+                    </div>
+
+                    <div>
+                        <label for="exampleInputPassword1"></label>
+                        <input type="password" name="password" class="form" id="exampleInputPassword1" placeholder="Password" required="">
+                    </div>
+
+                    <button type="submit" class="btn">Login</button><br><br>
+                    <b><i>or</i></b>
+                </form>
+                <form>
+                    <button><a href="/sign_up" class="btn">Sign Up</a></button>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+
 {% endblock %}

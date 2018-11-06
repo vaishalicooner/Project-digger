@@ -1,30 +1,47 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<button><a href="/all_dogs">All Dogs</a></button>
-<button><a href="/homepage">Home</a></button>
-<button><a href="/activity_log">Activity Log</a></button>
-<button><a href="/profile">Profile</a></button>
-<button><a href="/logout">Logout</a></button><br><br>
-<h1>Activity Log</h1><br>
 
-<table>
+<nav class="navbar navbar-expand-lg navbar-info bg-info" style="background-color: #e3f2fd;">
+    
+    <a class="navbar-brand ">
+    <img src="/static/dogs.jpg" width="70" height="70" class="d-inline-block align-top" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse button" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/homepage">Home </a>
+            <a class="nav-item nav-link" href="/all_dogs">All Dogs </a>
+            <a class="nav-item nav-link" href="/activity_log">Activity Log</a>
+            <a class="nav-item nav-link" href="/profile">Profile</a>
+            <a class="nav-item nav-link" href="/logout">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<h1 id="heading">Activity Log</h1><br>
+
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>--Dog Name--</th>
-            <th>--Check-in Time--  </th>
-            <th>--Check-out Time--  </th>
+            <th scope="col">Dog Name</th>
+            <th scope="col">Check-in Time</th>
+            <th scope="col">Check-out Time</th>
         </tr>
     </thead>
+
     <tbody>
-    {% for log in logs%}
-    <tr>
-        <td>{{log.dog.dogname}}</td>
-        <td>{{log.checkin}}</td>
-        <td>{{log.checkout}}</td>
-    </tr>
-    {%endfor%}
-    </tbody>
+        {% for log in logs%}
+        <tr>
+            <td>{{log.dog.dogname}}</td>
+            <td>{{log.checkin}}</td>
+            <td>{{log.checkout}}</td>
+        </tr>
+        {%endfor%}
+  </tbody>
 </table>
 
 {% endblock %}

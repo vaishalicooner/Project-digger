@@ -2,3 +2,187 @@
   width: 500px;
 }
 
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+.background {
+  background-image: url(/static/fluffy.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  color: #000;
+  line-height: 1.3;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    background-image: url(/static/leaves.png) no-repeat center center;
+    background-size: cover;
+}
+
+.navbar-brand {
+  padding: 0 15px;
+  height: 70px;
+  line-height: 80px;
+  font-size: 30px;
+}
+
+.card-header {
+    text-align: center;
+}
+
+
+.col-md-6 {
+    text-align: center;
+}
+
+
+.button {
+    font-size: 35px;
+
+}
+
+#titleleft {
+  color: #000;
+  font-family: 'Pacifico', cursive;
+  font-size:88px;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 75px;
+}
+
+#heading {
+    color: #000;
+    font-family: 'Pacifico', cursive;
+    font-size: 70px;
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+#heading_homepage{
+    color: #000;
+    font-family: 'Pacifico', cursive;
+    font-size: 50px;
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.weather {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+
+#signup {
+  color: #BFFFF1;
+  font-family: 'Pacifico', cursive;
+  text-align: center;
+  padding-bottom: 10px;
+  margin-top: 0px;
+}
+
+
+#para {
+    font-size: 30px;
+}
+
+.nav-item {
+    color: #000000;
+}
+
+
+.left {
+  background-color: #BFFFF1;
+  opacity: .45;
+  background: #BFFFF1;
+  height: 100%;
+  line-height: 1.3;
+  position: fixed;
+  width: 50%;
+  text-align: center;
+  left: 0;
+  vertical-align: bottom;
+}
+
+
+.right{
+  background-color: #000;
+  opacity: .65;
+  background: rgba(0, 0, 0, 0.85);
+  height: 100%;
+  line-height: 1.3;
+  right: 0;
+  position: fixed;
+  text-align: center;
+  width: 50%;
+  vertical-align: bottom;
+ /* margin: auto;
+  float: center;*/
+}
+
+
+p {
+  margin-left: 150px;
+  margin-right: 150px;
+  text-align: center;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #000;
+}
+
+.form{
+  width: 300px;
+  padding: 10px 0px;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px dashed #84DADC;
+  border-radius: 0;
+  outline: none;
+  color: #BFFFF1;
+  font-size: 16px;
+  text-align: center;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-weight: 300;
+  font-style: italic;
+  margin: 25px;
+}
+
+
+input[type="submit"] {
+  background: #FFFFFF;
+  border: 0;
+  width: 350px;
+  height: 40px;
+  /*border-radius: 3px;*/
+  color: #000000;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+input[type="submit"]:hover {
+  background: #cccccc;
+  animation-name: shake;
+}
+
+.btn {
+  border: 1px dashed #000000;
+  font-family: 'Pacifico', cursive;
+  font-size: 12px;
+  line-height: 1;
+  color: #000000;
+  text-decoration: none;
+}
+
+
+.btn:hover {
+    color: #000;
+    background-color: #BFFFF1;
+}

@@ -1,17 +1,57 @@
 {% extends 'base.html' %}
 {% block content %}
+<nav class="navbar navbar-expand-lg navbar-info bg-info" style="background-color: #e3f2fd;">
+    
+    <a class="navbar-brand ">
+    <img src="/static/dogs.jpg" width="70" height="70" class="d-inline-block align-top" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse button" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/">Login </a>
+        </div>
+    </div>
+</nav>
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <img src="/static/fluffy.jpg">
+        </div>
 
+        <div class="col-6">
+            <form action="/sign_up" method= "POST">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Your First Name:</label>
+                    <input type="text" name ="fname" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your name" required="">
+                </div>
 
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Your Last Name:</label>
+                    <input type="text" name="lname" class="form-control" id="exampleInputPassword1" placeholder="Enter last name">
+                </div>
 
-<form action="/sign_up" method= "POST">
-    Owner First Name: <input type = "text" name = "fname" required><br><br>
-    Owner Last Name: <input type = "text" name = "lname" required><br><br>
-    Apartment Number :<input type = "number" name = "apt"><br><br>
-    Email: <input type= "email" name="email" required=""><br><br>
-    Password: <input type= "password" name= "password" required><br><br>
-    <br><br>
-    <input type = "submit" value = "Sign-Up!"><br><br>
-</form>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Apartment Number:</label>
+                    <input type="number" name="apt" class="form-control" id="exampleInputPassword1" placeholder="Enter apt number">
+                </div>
 
- 
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Email:</label>
+                    <input type="email" name="email" class="form-control" id="exampleInputPassword1" placeholder="Enter email" required="">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password:</label>
+                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required="">
+                </div>
+
+                <button type="submit" class="btn">Sign Up</button>
+            </form>
+        </div>
+        
+    </div>   
+</div>
 {% endblock %}

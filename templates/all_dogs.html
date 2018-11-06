@@ -1,34 +1,51 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<button><a href="/all_dogs">All Dogs</a></button>
-<button><a href="/homepage">Home</a></button>
-<button><a href="/activity_log">Activity Log</a></button>
-<button><a href="/profile">Profile</a></button>
-<button><a href="/logout">Logout</a></button>
+<nav class="navbar navbar-expand-lg navbar-info bg-info" style="background-color: #e3f2fd;">
+    
+    <a class="navbar-brand ">
+    <img src="/static/dogs.jpg" width="70" height="70" class="d-inline-block align-top" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-<h1>All dogs</h1>
-<table>
+    <div class="collapse navbar-collapse button" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/homepage">Home </a>
+            <a class="nav-item nav-link" href="/all_dogs">All Dogs </a>
+            <a class="nav-item nav-link" href="/activity_log">Activity Log</a>
+            <a class="nav-item nav-link" href="/profile">Profile</a>
+            <a class="nav-item nav-link" href="/logout">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<h1 id="heading">All dogs</h1>
+
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>--Dog Name-- </th>
-            <th>--Age--  </th>
-            <th>--Breed-- </th>
-            <th>--Gender-- </th>
-            <th>--Size--</th>
-            
+            <th scope="col">Dog Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Breed</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Size</th>
         </tr>
     </thead>
-    {% for dog in dogs%}
-      <tr>
-        <td>{{dog.dogname}}</td>
-        <td>{{dog.age}}</td>
-        <td>{{dog.breed}}</td>
-        <td>{{dog.gender}}</td>
-        <td>{{dog.size}}</td>
 
-    </tr>
-    {%endfor%}
+    <tbody>
+        {% for dog in dogs%}
+        <tr>
+            <!-- <th scope="row">1</th> -->
+            <td>{{dog.dogname}}</td>
+            <td>{{dog.age}}</td>
+            <td>{{dog.breed}}</td>
+            <td>{{dog.gender}}</td>
+            <td>{{dog.size}}</td>
+        </tr>
+        {%endfor%}
+  </tbody>
 </table>
 
 

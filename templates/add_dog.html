@@ -1,24 +1,88 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<button><a href="/all_dogs">All Dogs</a></button>
-<button><a href="/homepage">Home</a></button>
-<button><a href="/activity_log">Activity Log</a></button>
-<button><a href="/profile">Profile</a></button>
-<button><a href="/logout">Logout</a></button>
+<nav class="navbar navbar-expand-lg navbar-info bg-info" style="background-color: #e3f2fd;">
+    
+    <a class="navbar-brand ">
+    <img src="/static/dogs.jpg" width="70" height="70" class="d-inline-block align-top" alt="">Digger
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse button" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/homepage">Home </a>
+            <a class="nav-item nav-link" href="/all_dogs">All Dogs </a>
+            <a class="nav-item nav-link" href="/activity_log">Activity Log</a>
+            <a class="nav-item nav-link" href="/profile">Profile</a>
+            <a class="nav-item nav-link" href="/logout">Logout</a>
+        </div>
+    </div>
+</nav>
 <br><br>
 
-<form action="/add_dog" enctype="multipart/form-data" method= "POST">
-    Dog Name: <input type = "text" name = "dogname" required=""><br><br>
-    Dog Age: <input type = "number" name = "age" min = "0"><br><br>
-    Breed: <input type = "text" name = "breed"><br><br>
-    Gender: <input type = "radio" name = "gender" value = Male> Male
-            <input type = "radio" name = "gender" value = "Female">Female<br><br>
-    Size: <input type = "radio" name = "size" value = "Small">Small (upto 25 pounds)
-          <input type = "radio" name = "size" value = "Medium">Medium (25 to 50 pounds)
-          <input type = "radio" name = "size" value = "Large">Large (over 50 pounds)<br><br>
-    Upload Image: <input type=file name="file">
-    <br>
-<input type = "submit" value = "Add">
-</form>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <img src="/static/fluffy.jpg">
+        </div>
+
+        <div class="col-6">
+            <form action="/add_dog" enctype="multipart/form-data" method= "POST">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Dog Name:</label>
+                    <input type="text" name ="dogname" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name" required="">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Dog Age:</label>
+                    <input type="number" name="age" class="form-control" id="exampleInputPassword1" placeholder="Age">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Breed:</label>
+                    <input type="text" name="breed" class="form-control" id="exampleInputPassword1" placeholder="Breed">
+                </div>
+
+                <div class="form-check form-check-inline">
+                    Size: <br> 
+                    <input class="form-check-input" type="radio" name="size" id="inlineRadio3" value="Small">
+                    <label class="form-check-label" for="inlineRadio3">Small(upto 25 pounds)</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="size" id="inlineRadio3" value="Medium">
+                    <label class="form-check-label" for="inlineRadio3">Medium(25 to 50 pounds)</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="size" id="inlineRadio3" value="Large">
+                    <label class="form-check-label" for="inlineRadio3">Large(over 50 pounds)</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    Gender: <br>
+                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="Male">
+                    <label class="form-check-label" for="inlineRadio1">Male</label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="Female">
+                    <label class="form-check-label" for="inlineRadio2">Female</label>
+                </div><br>
+
+                
+
+                <div class="form-group">
+                    <label for="exampleFormControlFile1">Upload Image:</label>
+                    <input type="file" name="file" class="form-control-file" id="exampleFormControlFile1">
+                </div>
+
+                <button type="submit" class="btn">Add</button>
+            </form>
+        </div>
+        
+    </div>   
+</div>
 {% endblock %}

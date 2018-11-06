@@ -1,201 +1,233 @@
 {% extends 'base.html' %}
 {% block content %}
-<!-- <h1> Welcome to Digger. Your dogs playground! </h1> -->
 
-<p>Welcome to Digger. Your dogs playground!</p>
  
-<button><a href="/all_dogs">All Dogs</a></button>
-<button><a href="/homepage">Home</a></button>
-<button><a href="/activity_log">Activity Log</a></button>
-<button><a href="/profile">Profile</a></button>
-<button><a href="/logout">Logout</a></button>
-<br><br>
-<form>
-    <button><a href="/add_dog">Add dog</a></button>
-</form>
-
-<!--  WEATHER API  -->
-
-<div> 
-    <h3><i> Weather </i> </h3>
-    <img src ="http://openweathermap.org/img/w/{{weather['icon']}}.png" width="120" height="120">
-    <p><b> Weather: </b>
-        <b><i>{{weather["description"].upper()}}</i></b><br>
-        <b> Temperature: </b>
-        <b>{{weather["temp"]}}F</b><br>
-    </p>
-</div>
-<!-- <a href="https://www.accuweather.com/en/us/sunnyvale-ca/94087/weather-forecast/331979" class="aw-widget-legal">
-
-</a><div id="awcc1539557126424" class="aw-widget-current"  data-locationkey="331979" data-unit="f" data-language="en-us" data-useip="false" data-uid="awcc1539557126424"></div><script type="text/javascript" src="https://oap.accuweather.com/launch.js"></script> -->
-<br>
-<br>
-
-<!-- LIST OF PRESENT DOGS IN DOG PARK -->
-
-<table id="mytable" align="right">
-    <tbody id="checkedin_dogs">
-        <thead>
-                <th> List of dogs at present!</th>    
-        </thead>
-        
-    {% for log in logs%}
-      <tr id="{{log.dog.dog_id}}">
-        <td>{{log.dog.dogname}}</td>
-    </tr>
-    {%endfor%}
-</tbody>
-</table>
-
-
-
-{% for pic in dog_profiles.dogs%}
-<p><img src =  'static/upload/{{pic.pic}}' width="300" height="200"></p>
-{% endfor %}
-
-<!--  GETTING DOG PICTURE FROM DATABASE  -->
-
-
-
-<!--  GETTING USERS DOGS -->
-<form id = "checkin_form" method="POST">
-{% for dog in dog_profiles.dogs %}
-<input type="checkbox" name="dog" value="{{dog.dog_id}}">{{dog.dogname}}
-{% endfor %}
-</form><br>
-
-<button id = "checkin" value = "Check-in">Check-in</button>
-<button id = "checkout" value = "Check-out">Check-out</button><br><br>
-
-<div id="message"></div>
-
-<script>
-  "use strict";
-  
-    let button1 = $('#checkin');
-
-    function checkin_click(evt) {
-        evt.preventDefault();
-        
-            let form_data = $("#checkin_form").serialize();
-            console.log(form_data);
-            $.post('/checkin', form_data, function(data) 
-            {
-                if (data.message != 'OK') {
-                    alert(data.message);
-                }
-                console.log(data);
-                $('#message').html("");
-
-               for (let dog of data.dogs) {
-                
-                console.log(dog.name)
-                // add an id to each tr, which is the dog's id.
-                let new_row = `<tr id="${dog.id}"><td>` + dog.name + "</td></tr>";
-
-                $("#checkedin_dogs").append(new_row);
-                
-                $('#message').append(`<p>${dog.name} checked in at ${data.check_in_time}</p>`);
-            }
-
-        })
-    }
-
-    button1.on('click', checkin_click)
-
-
-    let button2 = $('#checkout');
-
-    function checkout_click(evt) {
-        evt.preventDefault();
+<nav class="navbar navbar-expand-lg navbar-info bg-info" style="background-color: #e3f2fd;">
     
-        let form_data = $("#checkin_form").serialize();
-        console.log(form_data);
-        $.post('/checkout', form_data, function(data)
-        {
-            console.log(data);
-            // go look in the table and see if there's a row with f
-        
-        for (let dog_id of data.dog_ids) {
-            $('#'+dog_id).remove();
-        }   
-        $('#message').html('checked out at : ' + data.check_out_time);
-        });   
-    }
+    <a class="navbar-brand ">
+    <img src="/static/dogs.jpg" width="70" height="70" class="d-inline-block align-top" alt="">Digger
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-    button2.on('click', checkout_click)
+    <div class="collapse navbar-collapse button" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/homepage">Home </a>
+            <a class="nav-item nav-link" href="/all_dogs">All Dogs </a>
+            <a class="nav-item nav-link" href="/activity_log">Activity Log</a>
+            <a class="nav-item nav-link" href="/profile">Profile</a>
+            <a class="nav-item nav-link" href="/add_dog">Add Dog</a>
+            <a class="nav-item nav-link" href="/logout">Logout</a>
+        </div>
+    </div>
+</nav>
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+          <!--   <div class="weather">
+                <h3><i> Weather </i> </h3><br>
+                <img src ="http://openweathermap.org/img/w/{{weather['icon']}}.png" width="120" height="120"><br>
+                <p><b> Weather: </b>
+                    <b><i>{{weather["description"].upper()}}</i></b><br>
+                    <b> Temperature: </b>
+                    <b>{{weather["temp"]}}F</b><br>
+                </p>
+            </div> -->
+            <div class="card bg-light mb-3" style="max-width: 15rem;">
+                <div class="card-header">Weather</div>
+                    <div class="card-body">
+                        <img src ="http://openweathermap.org/img/w/{{weather['icon']}}.png" width="120" height="120"><br>
+                        <h5 class="card-title">Weather: <b><i>{{weather["description"].upper()}}</i></b></h5>
+                        <h5 class="card-title"> Temperature: <b>{{weather["temp"]}}F</b></p></h5>
+                            
+                    </div>
+            </div>
+        </div>
 
- </script>  
-
- <!--  CHART FOR DOGS -->
-
-
-<div class="dog-chart">
-    <canvas id="myChart" width="50" height="25"></canvas>
-    <div id="barLegend" class="chart-legend"></div>
+         <div class="col-md-6">
+             <!--  CHART FOR DOGS -->
+            <div class="dog-chart">
+                <canvas id="myChart" width="50" height="25"></canvas>
+                <div id="barLegend" class="chart-legend"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Dog Pics -->
+            {% for pic in dog_profiles.dogs%}
+            <p><img src =  'static/upload/{{pic.pic}}' width="300" height="200"></p>
+            {% endfor %}
+            
+        </div>
+
+        <div class="col-md-6">
+
+            <table class="table table-striped" id="mytable">
+                <thead>
+                    <tr>
+                        <th scope="col">List of dogs at present!</th>
+                    </tr>
+                </thead>
+                <tbody id="checkedin_dogs">
+
+                    {% for log in logs%}
+                    <tr id="{{log.dog.dog_id}}">
+                        <!-- <th scope="row">1</th> -->
+                        <td>{{log.dog.dogname}}</td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<div class="container-fluid">        
+        <div class="row">
+            <div class="col-md-6">
+                <form id = "checkin_form" method="POST">
+                {% for dog in dog_profiles.dogs %}
+                <input type="checkbox" name="dog" value="{{dog.dog_id}}">{{dog.dogname}}
+                {% endfor %}
+                </form><br>
+
+                <button id = "checkin" value = "Check-in">Check-in</button>
+                <button id = "checkout" value = "Check-out">Check-out</button><br><br>
+
+                <div id="message"></div>
+
+                <script>
+                  "use strict";
+                  
+                    let button1 = $('#checkin');
+
+                    function checkin_click(evt) {
+                        evt.preventDefault();
+                        
+                            let form_data = $("#checkin_form").serialize();
+                            console.log(form_data);
+                            $.post('/checkin', form_data, function(data) 
+                            {
+                                if (data.message != 'OK') {
+                                    alert(data.message);
+                                }
+                                console.log(data);
+                                $('#message').html("");
+
+                               for (let dog of data.dogs) {
+                                
+                                console.log(dog.name)
+                                // add an id to each tr, which is the dog's id.
+                                let new_row = `<tr id="${dog.id}"><td>` + dog.name + "</td></tr>";
+
+                                $("#checkedin_dogs").append(new_row);
+                                
+                                $('#message').append(`<p>${dog.name} checked in at ${data.check_in_time}</p>`);
+                            }
+
+                        })
+                    }
+
+                    button1.on('click', checkin_click)
+
+
+                    let button2 = $('#checkout');
+
+                    function checkout_click(evt) {
+                        evt.preventDefault();
+                    
+                        let form_data = $("#checkin_form").serialize();
+                        console.log(form_data);
+                        $.post('/checkout', form_data, function(data)
+                        {
+                            console.log(data);
+                            // go look in the table and see if there's a row with f
+                        
+                        for (let dog_id of data.dog_ids) {
+                            $('#'+dog_id).remove();
+                        }   
+                        $('#message').html('checked out at : ' + data.check_out_time);
+                        });   
+                    }
+
+                    button2.on('click', checkout_click)
+
+                 </script> 
+       
+        </div> 
+        <div class="col-md-6">
+        </div>
+
+    </div> 
+</div>
+
 <script>
-    const options = {
-        responsive: true,
-        legend: { display: true,
-         position: "top"},
-        title: {
-            display: true,
-            position: "top",    
-        barThickness: 2
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
+        const options = {
+                responsive: true,
+                legend: { display: true,
+                 position: "top"},
+                title: {
+                    display: true,
+                    position: "top",    
+                barThickness: 2
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
-            }]
-        }
-    };
-    
+            };
+                
 
-    // Make Line Chart of dogs in a week.
-    // let ctx_bar = $("#BarChart").get(0).getContext("2d");
-    let ctx_bar = $("#myChart").get(0).getContext("2d");
-    // ctx_bar.canvas.width = 20;
-    // ctx_bar.canvas.height = 10;
-    // ctx_bar.width = 20;
-    ctx_bar.height = 10;
-    $.get("/peak_time.json", function (data) {
-        console.log(data);
-      let myChart = new Chart(ctx_bar, {
-                                    type: 'bar',
-                                    data: {
-                                        labels: ['6am-7am',
-                                                 '7am-8am',
-                                                 '8am-9am',
-                                                 '9am-10am',
-                                                 '10am-11am',
-                                                 '11am-12pm',
-                                                 '12pm-1',
-                                                 '1pm-2pm',
-                                                 '2pm-3pm',
-                                                 '3pm-4pm',
-                                                 '4pm-5pm',
-                                                 '5pm-6pm',
-                                                 '6pm-7pm',
-                                                 '7pm-8pm',
-                                                 '8pm-9pm',
-                                                 '9pm-10pm',
-                                                 '10pm-11pm'],
-                                        datasets: [{
-                                            label: '# of dogs',
-                                            data: data,
-                                            backgroundColor:
-                                            ["#3e95cd","#33FFBD","#FF4D33","#33FFF5","#33A2FF","#33A2FF","#FF33BE","#FF3344","#E0FF33", "#33FFBD","#FF4D33","#33FFF5","#33A2FF","#33A2FF","#FF33BE","#FF3344","#E0FF33"],
-                                            borderWidth: 1
-                                        }]
-                                    },
-                                    options: options
-                                });
-    // $("#barLegend").html(myChart.generateLegend());
-    });
-</script>
-
+                // Make Line Chart of dogs in a week.
+                // let ctx_bar = $("#BarChart").get(0).getContext("2d");
+                let ctx_bar = $("#myChart").get(0).getContext("2d");
+                // ctx_bar.canvas.width = 20;
+                // ctx_bar.canvas.height = 10;
+                // ctx_bar.width = 20;
+                ctx_bar.height = 10;
+                $.get("/peak_time.json", function (data) {
+                    console.log(data);
+                  let myChart = new Chart(ctx_bar, {
+                                                type: 'bar',
+                                                data: {
+                                                    labels: ['6am-7am',
+                                                             '7am-8am',
+                                                             '8am-9am',
+                                                             '9am-10am',
+                                                             '10am-11am',
+                                                             '11am-12pm',
+                                                             '12pm-1',
+                                                             '1pm-2pm',
+                                                             '2pm-3pm',
+                                                             '3pm-4pm',
+                                                             '4pm-5pm',
+                                                             '5pm-6pm',
+                                                             '6pm-7pm',
+                                                             '7pm-8pm',
+                                                             '8pm-9pm',
+                                                             '9pm-10pm',
+                                                             '10pm-11pm'],
+                                                    datasets: [{
+                                                        label: '# of dogs',
+                                                        data: data,
+                                                        backgroundColor:
+                                                        ["#3e95cd","#33FFBD","#FF4D33","#33FFF5","#33A2FF","#33A2FF","#FF33BE","#FF3344","#E0FF33", "#33FFBD","#FF4D33","#33FFF5","#33A2FF","#33A2FF","#FF33BE","#FF3344","#E0FF33"],
+                                                        borderWidth: 1
+                                                    }]
+                                                },
+                                                options: options
+                                            });
+                // $("#barLegend").html(myChart.generateLegend());
+                });
+            </script>
 {% endblock %}
