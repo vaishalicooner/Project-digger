@@ -55,19 +55,7 @@ def logged_in():
     else:
         flash("Incorrect password")
         return redirect("/")
-
-# @app.route('/forgot_password')
-# def forgot_password():
-
-#     email = request.args.get('email')
-#     session['email'] = email
-#     if email is None:
-#         flash("This user does not exist. Please sign up!")
-#         return render_template('sign_up.html')
-
-#     user = User.query.filter(User.email == email).first()
-#     print("Your password is {}".format(User.password))   
-#     return render_template('/')
+        
 
 @app.route('/sign_up')
 def sign_up():
@@ -169,17 +157,6 @@ def home():
         weather=weather, dog=dog)
 
 
-# @app.route('/homepage', methods = ["POST"])
-# def homepage():
-
-#     present_log = Log.query.options(db.joinedload('dog')).filter(Log.checkout.is_(None)).all()
-#     # profile_data = User.query.options(db.joinedload('dogs')).get(session['user_id'])
-    
-#     weather = get_weather()
-#     # return render_template('homepage.html', logs=present_log, dog_profiles=profile_data, weather=weather)
-#     return render_template("homepage.html", logs=present_log, weather=weather)
-
-
 @app.route('/all_dogs')
 def all_dogs():
     """Get all dogs"""
@@ -200,16 +177,12 @@ def peak_time():
 
     for log in logs_from_db:
         log.checkin = log.checkin.astimezone(timezone('US/Pacific'))
-        # This gets trick when a dog is not checked out
-        # log.checkout = log.checkout.astimezone(timezone('US/Pacific'))
 
 
     for hour in range(0, 25):
         for log in logs_from_db:
             if log.checkin.hour == hour:
                 checkin_data[hour] = checkin_data.get(hour, 0) + 1
-            # if log.checkout.hour == hour:
-            #     checkout_data[hour] = checkout_data.get(hour, 0) + 1
 
     data = [0] * 17
     for key in checkin_data:
@@ -217,7 +190,6 @@ def peak_time():
         data[idx] = checkin_data[key]
     print(data)
     return jsonify(data)
-    # return jsonify({'checkin_data': checkin_data, 'checkout_data': checkout_data})
 
     
 @app.route('/activity_log')
@@ -274,9 +246,7 @@ def checkin():
             db.session.commit()
 
     in_time = in_time.strftime(date_format)
-    # checkin_dogs = Dog.query.join(Log).filter(Log.checkout.is_(None))
-    # checkedin_dogs = [ {'name': dog.dogname, 'id': dog.dog_id} for dog in checkin_dogs ]
-    # return jsonify({'check_in_time': in_time, 'dog_names': dog_names, 'checkedin_dogs': checkedin_names}) 
+
     return jsonify({'check_in_time': in_time, 'dogs': dog_info, 'message': message})
 
 @app.route('/checkout', methods=['POST'])
@@ -315,11 +285,6 @@ def get_weather():
     response = requests.get(url, headers=headers)
     weather_info = response.json()
 
-    # print(weather_info)
-    #if offline use json file 
-    # weather_json = open("weather.json").read()
-    # weather_info = json.loads(weather_json)
-
     weather_dis = weather_info["weather"][0]["description"]
     weather_icon = weather_info["weather"][0]["icon"]
 
@@ -340,8 +305,6 @@ def allowed_file(filename):
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension
-
-    # app.debug = True
    
     app.jinja_env.auto_reload = app.debug
 

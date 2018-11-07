@@ -194,12 +194,17 @@ input[type="submit"]:hover {
   animation-name: shake;
 }
 
+.activity {
+    text-align: center;
+}
+
 .btn {
   border: 1px dashed #000000;
   font-family: 'Pacifico', cursive;
   font-size: 12px;
   line-height: 1;
   color: #000000;
+  font-weight: 600;
   text-decoration: none;
 }
 
