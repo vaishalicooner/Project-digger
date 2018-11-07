@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<nav class="navbar navbar-expand-lg navbar-info bg-info" style="background-color: #e3f2fd;">
+<div class="pattern">
+</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #e3f2fd;">
     
     <a class="navbar-brand ">
-    <img src="/static/dogs.jpg" width="70" height="70" class="d-inline-block align-top" alt="">
+    <img src="/static/dogs.jpg" width="60" height="60" class="d-inline-block align-top" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse button" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
+        <div class="navbar-nav ml-auto">
             <a class="nav-item nav-link" href="/homepage">Home </a>
             <a class="nav-item nav-link" href="/all_dogs">All Dogs </a>
             <a class="nav-item nav-link" href="/activity_log">Activity Log</a>
@@ -20,6 +21,7 @@
         </div>
     </div>
 </nav>
+
 <h1 id="heading">Profile</h1>
 
 <p>First Name: {{profiles.fname}}</p>

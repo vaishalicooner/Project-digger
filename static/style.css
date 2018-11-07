@@ -17,16 +17,25 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-.container {
-    background-image: url(/static/leaves.png) no-repeat center center;
-    background-size: cover;
+
+.pattern {
+   background: url("https://www.toptal.com/designers/subtlepatterns/patterns/leaves.png");
+   position: fixed;
+   z-index: -1;
+   width: 100%;
+   height: 100%;
+   margin: 0;
+   padding: 0;
+   background-repeat: repeat;
 }
 
 .navbar-brand {
   padding: 0 15px;
-  height: 70px;
-  line-height: 80px;
+  height: 60px;
+  line-height: 60px;
   font-size: 30px;
+  background-color: #946E83;
+  /*opacity: .25;*/
 }
 
 .card-header {
@@ -35,13 +44,25 @@ html, body {
 
 
 .col-md-6 {
+    display: block;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+#dog_img {
+    border: 2px;
+    border-style: solid #000000;
+}
 
 .button {
     font-size: 35px;
 
+}
+
+#login-section {
+    text-align: center; 
+    vertical-align: middle;
 }
 
 #titleleft {
@@ -87,13 +108,19 @@ html, body {
   margin-top: 0px;
 }
 
-
+/*#sign_upimg {
+    background-size: 50%;
+}
+*/
 #para {
     font-size: 30px;
 }
 
 .nav-item {
     color: #000000;
+    font-family: 'Pacifico', cursive;
+    font-size: 20px;
+    font-weight: 250;
 }
 
 

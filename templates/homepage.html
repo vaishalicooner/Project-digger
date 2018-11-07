@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="pattern">
+</div>
 
- 
-<nav class="navbar navbar-expand-lg navbar-info bg-info" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #e3f2fd;">
     
     <a class="navbar-brand ">
-    <img src="/static/dogs.jpg" width="70" height="70" class="d-inline-block align-top" alt="">Digger
+    <img src="/static/dogs.jpg" width="60" height="60" class="d-inline-block align-top" alt="">Digger
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse button" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
+        <div class="navbar-nav ml-auto">
             <a class="nav-item nav-link" href="/homepage">Home </a>
             <a class="nav-item nav-link" href="/all_dogs">All Dogs </a>
             <a class="nav-item nav-link" href="/activity_log">Activity Log</a>
@@ -23,25 +24,17 @@
     </div>
 </nav>
 <br>
+
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6">
-          <!--   <div class="weather">
-                <h3><i> Weather </i> </h3><br>
-                <img src ="http://openweathermap.org/img/w/{{weather['icon']}}.png" width="120" height="120"><br>
-                <p><b> Weather: </b>
-                    <b><i>{{weather["description"].upper()}}</i></b><br>
-                    <b> Temperature: </b>
-                    <b>{{weather["temp"]}}F</b><br>
-                </p>
-            </div> -->
-            <div class="card bg-light mb-3" style="max-width: 15rem;">
-                <div class="card-header">Weather</div>
+        
+        <div class="col-md-6">  
+            <div class="card bg-light mb-3" style="margin: 0 auto;  text-align: center; max-width: 15rem;">    
+                <div class="card-header">Weather</div>    
                     <div class="card-body">
                         <img src ="http://openweathermap.org/img/w/{{weather['icon']}}.png" width="120" height="120"><br>
                         <h5 class="card-title">Weather: <b><i>{{weather["description"].upper()}}</i></b></h5>
-                        <h5 class="card-title"> Temperature: <b>{{weather["temp"]}}F</b></p></h5>
-                            
+                        <h5 class="card-title"> Temperature: <b>{{weather["temp"]}}F</b></h5>      
                     </div>
             </div>
         </div>
@@ -53,15 +46,16 @@
                 <div id="barLegend" class="chart-legend"></div>
             </div>
         </div>
-    </div>
-</div>
+
+    </div> <!-- row ends -->
+</div> <!-- container ends -->
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6">
             <!-- Dog Pics -->
             {% for pic in dog_profiles.dogs%}
-            <p><img src =  'static/upload/{{pic.pic}}' width="300" height="200"></p>
+            <p><img id="dog_img" src =  'static/upload/{{pic.pic}}' width="300" height="200"></p>
             {% endfor %}
             
         </div>
