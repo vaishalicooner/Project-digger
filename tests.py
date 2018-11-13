@@ -27,7 +27,8 @@ class ProjectTests(unittest.TestCase):
         """Can we reach the login page?"""
 
         result = self.client.get("/")
-        self.assertIn(b"Email:", result.data)
+        self.assertIn(b"DIGGER", result.data)
+        self.assertNotIn(b"List of dogs", result.data)
 
 
     def test_sign_up(self):
@@ -50,9 +51,8 @@ class ProjectTests(unittest.TestCase):
         """Can we logout?"""
 
         result = self.client.get("/logout", follow_redirects=True)
-        self.assertIn(b"Email:", result.data)
-        self.assertNotIn(b"Welcome to Digger. Your dogs playground!", 
-            result.data)
+        self.assertNotIn(b"Email:", result.data)
+        self.assertIn(b"DIGGER", result.data)
 
 
 class TestsDatabase(unittest.TestCase):
@@ -90,7 +90,7 @@ class TestsDatabase(unittest.TestCase):
         
         result = self.client.post("/login", data = {"email": "vc@gmail.com", 
             "password": "123"}, follow_redirects=True)
-        self.assertIn(b"Welcome to Digger. Your dogs playground!", result.data)
+        self.assertIn(b"List of dogs", result.data)
         self.assertNotIn(b"Email:", result.data)
 
 
@@ -118,7 +118,7 @@ class TestsDatabase(unittest.TestCase):
         result = self.client.post("/sign_up", data={"email": "vc@gmail.com", 
                                 "password": "123"}, follow_redirects=True)
         self.assertIn(b"User already exists.", result.data)
-        self.assertIn(b"Email:", result.data)
+        # self.assertIn(b"Email:", result.data)
         self.assertNotIn(b"Successfully signed up", result.data)
 
 
@@ -130,7 +130,7 @@ class TestsDatabase(unittest.TestCase):
                                 "lname": "Cooner","apt": "1", 
                                 "email": "vc@gmail.com", "password": "123"}, 
                                 follow_redirects=True)
-        self.assertIn(b"Email:", result.data)
+        self.assertIn(b"DIGGER", result.data)
         self.assertNotIn(b"Welcome to Digger. Your dogs playground!", result.data)
 
 
@@ -143,8 +143,7 @@ class TestsDatabase(unittest.TestCase):
                                 "gender": "Female", "size": "Small",
                                 "file": (BytesIO(b"abc"), '3fluffy.jpg'), "user": 3}, 
                                 follow_redirects=True)
-        self.assertIn(b"Welcome to Digger.", result.data)
-        # self.assertIn(b"List of dogs at present!", result.data)
+        self.assertIn(b"List of dogs", result.data)
         self.assertNotIn(b"Dog Name:", result.data)
 
 
